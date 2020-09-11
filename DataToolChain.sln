@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataToolChain.Ui", "DataToolChain.Ui\DataToolChain.Ui.csproj", "{1DD04BAC-00C6-4FC5-A664-ABEAC1E4F610}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1DD04BAC-00C6-4FC5-A664-ABEAC1E4F610}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DD04BAC-00C6-4FC5-A664-ABEAC1E4F610}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DD04BAC-00C6-4FC5-A664-ABEAC1E4F610}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DD04BAC-00C6-4FC5-A664-ABEAC1E4F610}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {10D491E6-0404-4C38-99F6-339F94E32DEE}
+	EndGlobalSection
+EndGlobal
