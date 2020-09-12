@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DataPowerTools" Version="2.0.0" />
+    <PackageReference Include="DataPowerTools" Version="2.0.1-alpha.0.13" />
+    <PackageReference Include="DataPowerTools.Connectivity" Version="2.0.1-alpha.0.13" />
+    <PackageReference Include="MediatR" Version="8.1.0" />
   </ItemGroup>
 
 </Project>
