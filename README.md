@@ -32,3 +32,7 @@ If no table names are specified, data will upload to table of the same name as t
 3. Set options or leave them as default
 4. Click "GO"!
 
+
+## Installing Data Toolchain
+
+DataToolChain is built with WPF on .NET Core 3.1. You can download and run the latest binaries from the [Releases](https://github.com/nh43de/DataToolChain/releases) page.
