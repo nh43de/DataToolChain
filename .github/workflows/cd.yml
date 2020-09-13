@@ -58,7 +58,7 @@ jobs:
 
     # Archive the package
     - name: Create archive
-      run: Compress-Archive -Path $env:Output_Directory\* -DestinationPath $env:Wpf_Binary_Archive
+      run: Compress-Archive -Path $env:Output_Directory\* -DestinationPath $env:Output_Directory\$env:Wpf_Binary_Archive
 
     # Create the release:  https://github.com/actions/create-release
     - name: Create release
@@ -80,6 +80,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}  # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-        asset_path: ${{ env.Wpf_Binary_Archive }}
+        asset_path: ${{ env.Output_Directory }}\${{ env.Wpf_Binary_Archive }}
         asset_name: Application Binaries
         asset_content_type: application/zip
