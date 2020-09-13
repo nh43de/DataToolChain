@@ -284,7 +284,7 @@ namespace DataToolChain
             DataUploaderTasks.ToList().ForEach(t =>
             {
                 t.Success = false;
-                t.StatusMessage = "";s
+                t.StatusMessage = "";
             });
 
             var cancellationToken = CancellationTokenSource.Token;
