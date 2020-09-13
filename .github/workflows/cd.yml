@@ -32,7 +32,7 @@ jobs:
       Solution_Path: DataToolChain.sln
       Wpf_Project_Path: DataToolChain.Ui\DataToolChain.Ui.csproj
       Output_Directory: DataToolChain.Ui\bin\Debug\netcoreapp3.1
-      Wpf_Binary_Archive: DataToolChain.Ui\bin\Debug\netcoreapp3.1\DataToolChain-${{github.ref}}.zip
+      Wpf_Binary_Archive: DataToolChain.zip
 
     steps:
     - name: Checkout
