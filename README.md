@@ -17,6 +17,10 @@ If entered in left-hand panel, all data will upload to this table. Alternatively
 
 If no table names are specified, data will upload to table of the same name as the file name minus extenson.
 
+#### JSON Configuration
+
+You can easily copy/paste JSON to allow for saving and storing uploader configuration.
+
 #### 🔢 Advanced Configuration
 
 - **Apply Default Transform Group** - gathers SQL schema information and attempts to transform any dates, numbers, bit values e.g. (Y/N), so that it will be able to upload to SQL server.
@@ -30,12 +34,6 @@ If no table names are specified, data will upload to table of the same name as t
 2. Select files to upload by clicking "Browse..."
 3. Set options or leave them as default
 4. Click "GO"!
-
-
-#### JSON Configuration
-
-You can easily copy/paste JSON to allow for saving and storing uploader configuration.
-
 
 ## Installing Data Toolchain
 
