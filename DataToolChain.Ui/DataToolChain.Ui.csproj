@@ -5,6 +5,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
 	<MinVerTagPrefix>v</MinVerTagPrefix>
+	<SignAssembly>true</SignAssembly>
+	<AssemblyOriginatorKeyFile>DataToolChain.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
