@@ -26,12 +26,12 @@ jobs:
 
     env:
       App_Packages_Directory: AppPackages
-      SigningCertificate: GitHubActionsDemo.pfx
-      Solution_Path: MyWpfApp.sln
-      Test_Project_Path: MyWpfApp.Tests\MyWpfApp.Tests.csproj
-      Wpf_Project_Path: MyWpfApp\MyWpfApp.csproj
-      Wap_Project_Directory: MyWpfApp.Package
-      Wap_Project_Name: MyWpfApp.Package.wapproj
+      SigningCertificate: DataToolChain.Ui.pfx
+      Solution_Path: DataToolChain.sln
+      Test_Project_Path: DataToolChain.Ui\DataToolChain.Ui.csproj
+      Wpf_Project_Path: DataToolChain.Ui\DataToolChain.Ui.csproj
+      Wap_Project_Directory: DataToolChain.Ui.Package
+      Wap_Project_Name: DataToolChain.Ui.Package.wapproj
 
     steps:
     - name: Checkout
