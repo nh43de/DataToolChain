@@ -3,7 +3,7 @@ For people that deal with data. A collection of utility applications that use [D
 
 ## DataUploader 🆕
 
-Upload data from multiple sources, including Excel, CSV, and more to SQL server.
+Upload data from multiple sources, including Excel, CSV, and more to SQL server. With data-fitting transformations and better error messages.
 
 ![Home Page](assets/home-page.png)
 
