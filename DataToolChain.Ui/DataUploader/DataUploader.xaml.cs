@@ -275,19 +275,19 @@ namespace DataToolChain
 
         public async Task Go()
         {
-            DataUploaderTasks.ToList().ForEach(t =>
-            {
-                t.Success = false;
-                t.StatusMessage = "";
-            });
-
-            var cancellationToken = CancellationTokenSource.Token;
-
             if (CurrentTask != null && !CurrentTask.IsCompleted)
             {
                 MessageBox.Show("A process is currently running.");
                 return;
             }
+
+            DataUploaderTasks.ToList().ForEach(t =>
+            {
+                t.Success = false;
+                t.StatusMessage = "";s
+            });
+
+            var cancellationToken = CancellationTokenSource.Token;
 
             CurrentTask = null;
 
