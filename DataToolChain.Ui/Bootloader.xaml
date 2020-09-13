@@ -5,12 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DataToolChain"
         mc:Ignorable="d"
-        Title="Bootstrapper" Height="226.4" Width="480.8"
+        Title="DataToolChain Home" Height="226.4" Width="480.8"
         d:DataContext="{d:DesignInstance Type=local:BootLoaderViewModel, IsDesignTimeCreatable=True}"
         >
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <ComboBox HorizontalAlignment="Center" VerticalAlignment="Center" ItemsSource="{Binding Path=Windows}" SelectedValuePath="Value" DisplayMemberPath="DisplayText" SelectedValue="{Binding Path=SelectedType}" Width="300" Margin="10"/>
+            <ComboBox HorizontalAlignment="Center" VerticalAlignment="Center" 
+                      ItemsSource="{Binding Path=Windows}" 
+                      SelectedValuePath="Value" DisplayMemberPath="DisplayText" 
+                      SelectedValue="{Binding Path=SelectedType}" 
+                      Width="300" Margin="10"/>
             <Button Click="ButtonGo_Click" Width="150" Margin="10" Height="25">Go</Button>
         </StackPanel>
         

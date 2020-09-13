@@ -79,8 +79,10 @@
             <DataGrid Margin="5" Grid.Row="1" CurrentCellChanged="DataGrid_OnCurrentCellChanged" ItemsSource="{Binding DataUploaderTasks}" SelectionMode="Extended"></DataGrid>
         </Grid>
 
-        <StatusBar Grid.Row="1" Grid.ColumnSpan="2">
-            <StatusBarItem><TextBox Text="{Binding WindowStatusDisplay}"></TextBox></StatusBarItem>
+        <StatusBar Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+            <StatusBarItem>
+                <TextBlock Text="{Binding WindowStatusDisplay}" HorizontalAlignment="Stretch"></TextBlock>
+            </StatusBarItem>
         </StatusBar>
     </Grid>
 </Window>

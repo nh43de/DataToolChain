@@ -8,6 +8,7 @@ namespace DataToolChain
     {
         private string _statusMessage;
         private bool _success;
+        private int _rowsCopied;
         public string FilePath { get; set; }
 
         [JsonIgnore]
@@ -33,11 +34,7 @@ namespace DataToolChain
                 OnPropertyChanged();
             }
         }
-
-        [JsonIgnore]
-        public int RowsCopied { get; set; }
-
-
+        
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)

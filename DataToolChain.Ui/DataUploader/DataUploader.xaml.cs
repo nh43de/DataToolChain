@@ -75,7 +75,7 @@ namespace DataToolChain
         private ObservableCollection<DataUploaderTask> _dataUploaderTasks = new ObservableCollection<DataUploaderTask>();
         private string _dbName;
         private string _destinationTable = "";
-        private string _serverName = "alm-dal-app-04";
+        private string _serverName = "localhost";
         private string _statusDisplay;
         private string _jsonConfiguration;
         private bool _applyDefaultTransformGroup = true;

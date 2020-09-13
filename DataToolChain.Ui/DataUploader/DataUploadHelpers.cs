@@ -69,7 +69,7 @@ namespace DataToolChain
             //csv reader doesn't report depth
             catch (Exception ex)
             {
-                if (lastCopiedRow == -1 &&  reader.Depth <= 0)
+                if (lastCopiedRow == -1 && reader.Depth <= 0)
                 {
                     task.StatusMessage = "No rows were copied. ";
                 }

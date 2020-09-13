@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,15 +14,26 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using DataToolChain.Ui.Annotations;
 
 namespace DataToolChain
 {
 
-    public class BootLoaderViewModel
+    public class BootLoaderViewModel : INotifyPropertyChanged
     {
-        public List<DropDownDisplay<Type>> Windows { get; } = new List<DropDownDisplay<Type>>();
+        private Type _selectedType;
 
-        public Type SelectedType { get; set; }
+        public List<DropDownDisplay<Type>> Windows { get; }
+
+        public Type SelectedType
+        {
+            get => _selectedType;
+            set
+            {
+                _selectedType = value;
+                OnPropertyChanged();
+            }
+        }
 
         public BootLoaderViewModel()
         {
@@ -28,6 +41,7 @@ namespace DataToolChain
                 Assembly.GetExecutingAssembly()    
                     .GetTypes()
                     .Where(t => t.IsPublic && t.GetConstructors().Any(c => c.GetParameters().Length == 0) && t.BaseType == typeof(Window))
+                    .Where(t => t.Name != nameof(Bootloader))
                     .Select(w => new DropDownDisplay<Type>
                     {
                         DisplayText = w.Name,
@@ -35,6 +49,8 @@ namespace DataToolChain
                     })
                     .OrderBy(a => a.DisplayText)
                     .ToList();
+
+            SelectedType = Windows[0].Value;
         }
 
         public void Launch()
@@ -42,6 +58,14 @@ namespace DataToolChain
             var w = (Window)(SelectedType?.GetConstructor(Type.EmptyTypes)?.Invoke(null)); //.Show();
 
             w?.Show();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 
