@@ -32,7 +32,8 @@ jobs:
       Solution_Path: DataToolChain.sln
       Wpf_Project_Path: DataToolChain.Ui\DataToolChain.Ui.csproj
       Output_Directory: DataToolChain.Ui\bin\Debug\netcoreapp3.1
-      
+      Wpf_Binary_Archive: ${{env.Output_Directory}}\DataToolChain-${{github.ref}}.zip
+
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -55,6 +56,10 @@ jobs:
     - name: Build application
       run: dotnet build
 
+    # Archive the package
+    - name: Create archive
+      run: Compress-Archive -Path $env:Output_Directory\* -DestinationPath $env:Wpf_Binary_Archive
+
     # Create the release:  https://github.com/actions/create-release
     - name: Create release
       id: create_release
@@ -75,6 +80,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}  # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-        asset_path: ${{ env.Output_Directory }}
+        asset_path: ${{ env.Wpf_Binary_Archive }}
         asset_name: Application Binaries
         asset_content_type: application/zip
