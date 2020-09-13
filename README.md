@@ -1,6 +1,5 @@
 ﻿# DataToolChain - Utilities for Data 🆕
-A collection of utility applications that use [DataPowerTools](https://github.com/nh43de/DataPowerTools) to do some cool stuff. (And more coming soon!!)
-
+For people that deal with data. A collection of utility applications that use [DataPowerTools](https://github.com/nh43de/DataPowerTools) to do some cool stuff. (And more coming soon!!)
 
 ## DataUploader 🆕
 
@@ -31,6 +30,11 @@ If no table names are specified, data will upload to table of the same name as t
 2. Select files to upload by clicking "Browse..."
 3. Set options or leave them as default
 4. Click "GO"!
+
+
+#### JSON Configuration
+
+You can easily copy/paste JSON to allow for saving and storing uploader configuration.
 
 
 ## Installing Data Toolchain
