@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -351,21 +352,39 @@ namespace DataToolChain
                     if (string.IsNullOrWhiteSpace(task.FilePath))
                     {
                         task.StatusMessage = "No file specified";
+                        continue;
                     }
 
-                    var reader = DataReaderFactories.Default(task.FilePath);
+                    IDataReader reader;
+                    try
+                    {
+                        reader = DataReaderFactories.Default(task.FilePath);
+                    }
+                    catch (Exception e)
+                    {
+                        task.StatusMessage = "Error opening file: " + e.Message;
+                        continue;
+                    }
 
                     if(!UseOrdinals)
                         reader = reader.AddColumn("FilePath", v => task.FilePath);
 
-                    using (reader)
-                    using(var sqlc = new SqlConnection(connstring))
+                    try
                     {
-                        sqlc.Open();
+                        using (reader)
+                        using (var sqlc = new SqlConnection(connstring))
+                        {
+                            sqlc.Open();
 
-                        var destinationTable = GetDestinationTable(task);
+                            var destinationTable = GetDestinationTable(task);
 
-                        await DataUploadHelpers.Upload(sqlc, reader, task, cancellationToken, destinationTable, UseOrdinals, BulkCopyRowsPerBatch, ApplyDefaultTransformGroup ? (DataTransformGroup)DataTransformGroups.Default : (DataTransformGroup)DataTransformGroups.None);
+                            await DataUploadHelpers.Upload(sqlc, reader, task, cancellationToken, destinationTable, UseOrdinals, BulkCopyRowsPerBatch, ApplyDefaultTransformGroup ? (DataTransformGroup)DataTransformGroups.Default : (DataTransformGroup)DataTransformGroups.None);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        task.StatusMessage = "Error during upload: " + e.Message;
+                        continue;
                     }
                 }
             }, cancellationToken);
