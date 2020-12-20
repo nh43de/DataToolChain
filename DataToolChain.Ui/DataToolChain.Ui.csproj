@@ -12,11 +12,17 @@
   <ItemGroup>
     <PackageReference Include="DataPowerTools" Version="2.0.2" />
     <PackageReference Include="DataPowerTools.Connectivity" Version="2.0.2" />
+    <PackageReference Include="ExcelDataReader" Version="3.7.0" />
     <PackageReference Include="MediatR" Version="8.1.0" />
     <PackageReference Include="MinVer" Version="2.3.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ExcelFormulaExtractor\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>

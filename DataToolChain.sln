@@ -12,6 +12,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{36002CFF-C323-44D1-8CA7-28FBAB8F3871}"
+	ProjectSection(SolutionItems) = preProject
+		assets\excel-formula-extractor.png = assets\excel-formula-extractor.png
+		assets\home-page.png = assets\home-page.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +79,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{36002CFF-C323-44D1-8CA7-28FBAB8F3871} = {83E23E10-9A5F-46BF-A7D3-13262B6D5160}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {10D491E6-0404-4C38-99F6-339F94E32DEE}

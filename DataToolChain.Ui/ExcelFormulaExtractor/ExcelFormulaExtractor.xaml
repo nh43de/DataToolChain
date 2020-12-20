@@ -1,0 +1,39 @@
+﻿<Window x:Class="DataToolChain.Ui.ExcelFormulaExtractor.ExcelFormulaExtractor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:excelFormulaExtractor="clr-namespace:DataToolChain.Ui.ExcelFormulaExtractor"
+        mc:Ignorable="d"
+        Title="Excel Formula Extractor" Height="650" Width="850"
+        d:DataContext="{d:DesignInstance Type=excelFormulaExtractor:ExcelFormulaExtractorViewModel, IsDesignTimeCreatable=True}"
+        >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label VerticalContentAlignment="Center" Margin="5">Input Files:</Label>
+            <DataGrid Grid.Column="1" Margin="5" VerticalContentAlignment="Center" Height="200" ItemsSource="{Binding Path=FilePaths, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <Button Margin="5,5,5,0" Content="..." HorizontalAlignment="Stretch" VerticalAlignment="Top" Width="25" Click="ButtonBrowse_OnClick" Height="25"/>
+                <Button Margin="5" Content="Go" HorizontalAlignment="Stretch"  VerticalAlignment="Top" Height="25" Width="86" Click="ButtonGoClick"/>
+            </StackPanel>
+        </Grid>
+
+        <StackPanel Background="Beige" Grid.Row="1" Margin="5">
+            
+        </StackPanel>
+
+        <TextBox Grid.Row="2" Margin="5" TextWrapping="Wrap" Text="{Binding Path=OutputText, Mode=TwoWay}" AcceptsReturn="True" IsUndoEnabled="False" VerticalScrollBarVisibility="Auto" BorderThickness="2" BorderBrush="#FF193EAE" />
+    </Grid>
+</Window>
