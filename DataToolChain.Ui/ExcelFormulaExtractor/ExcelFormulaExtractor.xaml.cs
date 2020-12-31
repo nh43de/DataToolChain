@@ -79,7 +79,7 @@ namespace DataToolChain.Ui.ExcelFormulaExtractor
                         var f = reader.GetFormula(col);
 
                         if (string.IsNullOrWhiteSpace(f) == false)
-                            yield return $"{fileName}\t{sheetNumber}\t{col}\t{row}\t{f}";
+                            yield return $"{fileName}\t{sheetNumber}\t{col+1}\t{row}\t{f}";
                     }
                     row++;
                 }
