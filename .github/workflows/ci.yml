@@ -36,7 +36,7 @@ jobs:
 
     # Use Nerdbank.GitVersioning to set version variables: https://github.com/AArnott/nbgv
     - name: Use Nerdbank.GitVersioning to set version variables
-      uses: dotnet/nbgv@v0.4
+      uses: dotnet/nbgv@v0.4.0
       with:
         setAllVars: true
         stamp: package.json
@@ -45,7 +45,7 @@ jobs:
     - name: Install .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '3.1.302'
+        dotnet-version: '3.1.x'
 
     # Test
     #- name: Execute Unit Tests
