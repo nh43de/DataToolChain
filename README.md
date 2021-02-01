@@ -62,7 +62,7 @@ Extracts formulas from given excel sheets.
 				
 This tool moves all vLookups in an Excel workbook into a sheet called "__data". This sheet can then be pasted as values to avoid performance issues with vLookups.
 
-#### IV. DbStringer
+### IV. DbStringer
 
 A collection of handy string operations. String together IN statements in SQL, or quickly sort or format items on the fly.
 
