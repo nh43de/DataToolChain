@@ -12,11 +12,18 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
 
         </Grid.RowDefinitions>
+        <StackPanel Background="Beige">
+            <TextBlock TextWrapping="Wrap" Margin="5">
+This tool extracts all formulas in an Excel workbook into tabular data.
+            </TextBlock>
+        </StackPanel>
 
-        <Grid Margin="5">
+
+        <Grid Margin="5" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
@@ -30,10 +37,10 @@
             </StackPanel>
         </Grid>
 
-        <StackPanel Background="Beige" Grid.Row="1" Margin="5">
+        <StackPanel Background="Beige" Grid.Row="2" Margin="5">
             
         </StackPanel>
 
-        <TextBox Grid.Row="2" Margin="5" TextWrapping="Wrap" Text="{Binding Path=OutputText, Mode=TwoWay}" AcceptsReturn="True" IsUndoEnabled="False" VerticalScrollBarVisibility="Auto" BorderThickness="2" BorderBrush="#FF193EAE" />
+        <TextBox Grid.Row="3" Margin="5" TextWrapping="Wrap" Text="{Binding Path=OutputText, Mode=TwoWay}" AcceptsReturn="True" IsUndoEnabled="False" VerticalScrollBarVisibility="Auto" BorderThickness="2" BorderBrush="#FF193EAE" />
     </Grid>
 </Window>

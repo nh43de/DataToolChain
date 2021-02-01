@@ -1,0 +1,59 @@
+﻿<Window x:Class="DataToolChain.Ui.ExcelVlookupRemover.ExcelVlookupRemover"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:excelVlookupRemover="clr-namespace:DataToolChain.Ui.ExcelVlookupRemover"
+        mc:Ignorable="d"
+        Title="Excel VLookup Remover" Height="650" Width="850"
+        d:DataContext="{d:DesignInstance Type=excelVlookupRemover:ExcelVlookupRemoverViewModel, IsDesignTimeCreatable=True}"
+        >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+
+        <StackPanel Background="Beige" Grid.Row="0">
+            <TextBlock TextWrapping="Wrap" Margin="5">
+				This tool moves all vLookups in an Excel workbook into a sheet called "__data". This sheet can then be pasted as values to avoid performance issues with vLookups.
+            </TextBlock>
+        </StackPanel>
+
+        <Grid Margin="5" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label VerticalContentAlignment="Center" Margin="5">Input Files:</Label>
+                <DataGrid Grid.Column="1" Margin="5" VerticalContentAlignment="Center" Height="200" ItemsSource="{Binding Path=FilePaths, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                    <Button Margin="5,5,5,0" Content="..." HorizontalAlignment="Stretch" VerticalAlignment="Top" Width="25" Click="ButtonBrowse_OnClick" Height="25"/>
+                    <Button Margin="5" Content="Go" HorizontalAlignment="Stretch"  VerticalAlignment="Top" Height="25" Width="86" Click="ButtonGoClick"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Margin="5">Destination File Suffix:</Label>
+                    <TextBox Grid.Column="1" Margin="5" Text="{Binding Path=DestinationFileSuffix}"></TextBox>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <TextBox Grid.Row="2" Margin="5" TextWrapping="Wrap" Text="{Binding Path=OutputText, Mode=TwoWay}" AcceptsReturn="True" IsUndoEnabled="False" VerticalScrollBarVisibility="Auto" BorderThickness="2" BorderBrush="#FF193EAE" />
+    </Grid>
+</Window>

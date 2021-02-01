@@ -57,6 +57,11 @@ Extracts formulas from given excel sheets.
 
 ![Excel Formula Extractor](assets/excel-formula-extractor.png)
 
+
+### III. Excel vLookup Mover
+				
+This tool moves all vLookups in an Excel workbook into a sheet called "__data". This sheet can then be pasted as values to avoid performance issues with vLookups.
+
 ## Upcoming Additions
 
 - Json to c# class
