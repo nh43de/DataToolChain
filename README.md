@@ -62,6 +62,39 @@ Extracts formulas from given excel sheets.
 				
 This tool moves all vLookups in an Excel workbook into a sheet called "__data". This sheet can then be pasted as values to avoid performance issues with vLookups.
 
+#### IV. DbStringer
+
+A collection of handy string operations. String together IN statements in SQL, or quickly sort or format items on the fly.
+
+![DbStringer](assets/dbstringer.gif)
+
+##### List of Features
+
+ - Comma-separated list to vertical list
+ - Distinct
+ - Escape Regex
+ - Escape SQL String
+ - Format JSON
+ - Generalize Regex - use ^^^ to enclose groups, and _________ to indicate a wildcard
+ - NULLIF
+ - Params to Tabs
+ - Smart NULLIF
+ - Sort
+ - Sort by Length
+ - SQL Columns to DECLARE statement
+ - Sql Input Params Into Declarations
+ - Tabs to params
+ - Tabs to rows
+ - Tabs to SQL Columns
+ - Trim
+ - Unescape regex
+ - Vertical list to comma-separated list
+ - Vertical list to double quoted, comma-separated list
+ - Vertical list to single quoted, comma-separated list
+ - Vertical list to SQL literal string
+ - Vertical list to SQL UNION ALL
+ - Vertical list to SQL UNIONS
+
 ## Upcoming Additions
 
 - Json to c# class

@@ -12,7 +12,7 @@ namespace DataToolChain.Tests
         {
             var tree = ExcelFormulaParser.ParseToTree("VLOOKUP(E11,F:I,2,FALSE)+VLOOKUP(E11,$F:I,2,FALSE)+VLOOKUP(E11,F:$I,2,FALSE)+VLOOKUP(E11,1:5,2,FALSE)+VLOOKUP(E11,$1:5,2,FALSE)+VLOOKUP(E11,Sheet1!$1:5,2,FALSE)+VLOOKUP(E11,Sheet1!F:$I,2,FALSE)+VLOOKUP(E11,Sheet1!F1:$I2,2,FALSE)+VLOOKUP(E11,F1:$I2,2,FALSE)");
 
-            ExcelVlookupRemoverHelpers.FormulaSanitizerWalker.MakeReferencesAbsolute2(tree.Root, "_test");
+            ExcelVlookupRemoverHelpers.FormulaSanitizerWalker.MakeReferencesAbsolute(tree.Root, "_test");
 
             var r = tree.Root.Print();
 
@@ -27,7 +27,7 @@ namespace DataToolChain.Tests
         {
             var tree = ExcelFormulaParser.ParseToTree(@"VLOOKUP(CONCATENATE($D$12,""_"",$D13),ZMReport!$F:$AG,MATCH('Stress Results'!J$7,ZMReport!$F$4:$AG$4,0),0)/1000");
 
-            ExcelVlookupRemoverHelpers.FormulaSanitizerWalker.MakeReferencesAbsolute2(tree.Root, "Stress Results");
+            ExcelVlookupRemoverHelpers.FormulaSanitizerWalker.MakeReferencesAbsolute(tree.Root, "Stress Results");
 
             var r = tree.Root.Print();
 
