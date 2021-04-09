@@ -14,11 +14,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{36002CFF-C323-44D1-8CA7-28FBAB8F3871}"
 	ProjectSection(SolutionItems) = preProject
+		assets\dbstringer.gif = assets\dbstringer.gif
 		assets\excel-formula-extractor.png = assets\excel-formula-extractor.png
 		assets\home-page.png = assets\home-page.png
+		assets\SqlQueryToCsv.JPG = assets\SqlQueryToCsv.JPG
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataToolChain.Tests", "test\DataToolChain.Tests\DataToolChain.Tests.csproj", "{5F41819B-6E2B-4E5B-8877-37A3417F52B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataToolChain.Tests", "test\DataToolChain.Tests\DataToolChain.Tests.csproj", "{5F41819B-6E2B-4E5B-8877-37A3417F52B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

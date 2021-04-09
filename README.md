@@ -57,7 +57,6 @@ Extracts formulas from given excel sheets.
 
 ![Excel Formula Extractor](assets/excel-formula-extractor.png)
 
-
 ### III. Excel vLookup Mover
 				
 This tool moves all vLookups in an Excel workbook into a sheet called "__data". This sheet can then be pasted as values to avoid performance issues with vLookups.
@@ -68,14 +67,14 @@ A collection of handy string operations. String together IN statements in SQL, o
 
 ![DbStringer](assets/dbstringer.gif)
 
-##### List of Features
+##### List of String Manipulation Features
 
  - Comma-separated list to vertical list
  - Distinct
  - Escape Regex
  - Escape SQL String
  - Format JSON
- - Generalize Regex - use ^^^ to enclose groups, and _________ to indicate a wildcard
+ - Generalize Regex - use ^^^ to enclose groups, and ___ to indicate a wildcard
  - NULLIF
  - Params to Tabs
  - Smart NULLIF
@@ -95,8 +94,15 @@ A collection of handy string operations. String together IN statements in SQL, o
  - Vertical list to SQL UNION ALL
  - Vertical list to SQL UNIONS
 
+### V. Sql Query to .csv
+
+A high performance streaming implementation of outputting a SQL query to a comma-separated values (.csv) file using DataPowerTools. Great for outputting millions or billions of rows to a csv file without using SSMS. Also faster than SSMS or any other tool we've tested.
+
+![Sql Query To Csv](assets/SqlQueryToCsv.JPG)
+
 ## Upcoming Additions
 
 - Json to c# class
 - More
+
 
