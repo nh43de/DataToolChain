@@ -17,7 +17,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using DataPowerTools.Csv;
 using DataPowerTools.DataConnectivity.Sql;
 using DataPowerTools.DataReaderExtensibility.TransformingReaders;
 using DataPowerTools.Extensions;
@@ -130,20 +129,19 @@ namespace DataToolChain
 
                 //sqlConn.Open();
 
-                var r = sqlConn.ExecuteReader(Sql);
+                using var r = sqlConn.ExecuteReader(Sql);
 
-                var rc = new RowCountingDataReader<IDataReader>(r, new Progress<int>(i =>
+                var rows = 0;
+
+                var rc = r.NotifyOn(new Progress<int>(i =>
                 {
-                    if (i % 1024 == 0)
-                        StatusMessage = $"{i} rows output.";
+                    StatusMessage = $"{i} rows output.";
+                    rows = i;
                 }));
 
-                using (rc)
-                {
-                    rc.WriteCsv(FilePath);
-                }
+                rc.WriteCsv(FilePath);
 
-                StatusMessage = $"Finished: {rc.Depth} rows output.";
+                StatusMessage = $"Finished: {rows} rows output.";
             }
             catch (Exception e)
             {
