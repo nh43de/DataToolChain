@@ -20,7 +20,7 @@ namespace DataToolChain
                 OnPropertyChanged();
             }
         }
-
+         
         public string DestinationTable { get; set; }
 
         [JsonIgnore]
