@@ -82,6 +82,9 @@ namespace DataToolChain
         private bool _applyDefaultTransformGroup = true;
         private bool _createTable = false;
         private bool _truncateTable = false;
+        private string _password;
+        private string _username;
+        private string _excludeNullColumns;
 
 
         public DataUploaderViewModel()
@@ -155,11 +158,11 @@ namespace DataToolChain
             public string DbName { get; set; }
             public string DestinationTable { get; set; }
             public string Username { get; set; }
-            public string Password { get; set; }
-
+            
             public bool TruncateTables { get; set; } 
 
             public DataUploaderTask[] Tasks { get; set; }
+            public string ExcludeNullColumns { get; set; }
         }
 
         public void LoadConfig()
@@ -171,8 +174,9 @@ namespace DataToolChain
                 DbName = a.DbName;
                 DestinationTable = a.DestinationTable;
                 Username = a.Username;
-                Password = a.Password;
                 TruncateTableFirst = a.TruncateTables;
+                ExcludeNullColumns = a.ExcludeNullColumns;
+
 
                 DataUploaderTasks = new ObservableCollection<DataUploaderTask>(a.Tasks);
             }
@@ -190,10 +194,11 @@ namespace DataToolChain
                 DbName = DbName,
                 DestinationTable = DestinationTable,
                 Username = Username,
-                Password = Password,
                 Tasks = DataUploaderTasks.ToArray(),
-                TruncateTables = TruncateTableFirst
+                TruncateTables = TruncateTableFirst,
+                ExcludeNullColumns = ExcludeNullColumns
             };
+
             var b = a.ToJson(true);
             if (JsonConfiguration != b)
             {
@@ -211,9 +216,36 @@ namespace DataToolChain
             }
         }
 
-        public string Username { get; set; }
 
-        public string Password { get; set; }
+        public string ExcludeNullColumns
+        {
+            get => _excludeNullColumns;
+            set
+            {
+                _excludeNullColumns = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Username
+        {
+            get => _username;
+            set
+            {
+                _username = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Password
+        {
+            get => _password;
+            set
+            {
+                _password = value;
+                OnPropertyChanged();
+            }
+        }
 
         public string DbName
         {
@@ -378,7 +410,7 @@ namespace DataToolChain
 
                             var destinationTable = GetDestinationTable(task);
 
-                            await DataUploadHelpers.Upload(sqlc, reader, task, cancellationToken, destinationTable, UseOrdinals, BulkCopyRowsPerBatch, ApplyDefaultTransformGroup ? (DataTransformGroup)DataTransformGroups.Default : (DataTransformGroup)DataTransformGroups.None);
+                            await DataUploadHelpers.Upload(sqlc, reader, task, cancellationToken, destinationTable, UseOrdinals, BulkCopyRowsPerBatch, ApplyDefaultTransformGroup ? (DataTransformGroup)DataTransformGroups.Default : (DataTransformGroup)DataTransformGroups.None, ExcludeNullColumns);
                         }
                     }
                     catch (Exception e)

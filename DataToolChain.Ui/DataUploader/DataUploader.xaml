@@ -38,6 +38,11 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="5">
+                <Label Width="260" Margin="5">Exclude when cols are null (comma-separated):</Label>
+                <TextBox Width="91" Margin="5" Text="{Binding Path=ExcludeNullColumns}"></TextBox>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="5">
                 <Label Width="150" Margin="5">Username:</Label>
                 <TextBox Width="200" Margin="5" Text="{Binding Path=Username}"></TextBox>
             </StackPanel>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DataPowerTools.DataConnectivity.Sql;
@@ -41,46 +42,67 @@ namespace DataToolChain
             sqlc.ExecuteSql(tableSql);
         }
 
-        public static async Task Upload(SqlConnection sqlc, IDataReader reader, DataUploaderTask task, CancellationToken cancellationToken, string destinationTable, bool useOrdinals, int bulkCopyRowsPerBatch = 5000, DataTransformGroup transformGroup = null)
+        public static async Task Upload(SqlConnection sqlc, IDataReader sourceReader, DataUploaderTask task, CancellationToken cancellationToken, string destinationTable, bool useOrdinals, int bulkCopyRowsPerBatch = 5000, DataTransformGroup transformGroup = null, string filterNullColumns = null)
         {
             long lastCopiedRow = -1;
 
-            SmartDataReader<IDataReader> r = null;//.ApplyTransformation(1, row => DataTransforms.TransformExcelDate(row[1]));
+            SmartDataReader<IDataReader> smartReader = null;//.ApplyTransformation(1, row => DataTransforms.TransformExcelDate(row[1]));
+            
+            sourceReader = sourceReader.CountRows();
 
             try
             {
-                r = reader.MapToSqlDestination(destinationTable, sqlc, transformGroup);
-                 
-                await r.BulkInsertSqlServerAsync(sqlc, destinationTable, new AsyncSqlServerBulkInsertOptions
+
+                var reader = sourceReader;
+
+
+                if (filterNullColumns != null)
                 {
-                    RowsCopiedEventHandler = i =>
+                    var cols = filterNullColumns.Split(",");
+
+                    reader = reader.Where(dataReader =>
                     {
-                        task.StatusMessage = $"{i} Rows Copied";
-                        lastCopiedRow = i;
-                    },
-                    BatchSize = bulkCopyRowsPerBatch,
-                    CancellationToken = cancellationToken,
-                    UseOrdinals = useOrdinals
+                        return cols.All(col => !string.IsNullOrWhiteSpace(dataReader[col]?.ToString()));
+                    });
+                }
+                
+                smartReader = reader.MapToSqlDestination(destinationTable, sqlc, transformGroup);
+
+                var progress = new Progress<int>(i =>
+                {
+                    task.StatusMessage = $"{i} Rows Copied";
                 });
+
+                var drr = smartReader
+                    .NotifyOn(progress, bulkCopyRowsPerBatch)
+                    .CountRows();
+                
+                await drr.BulkInsertSqlServerAsync(sqlc, destinationTable, new AsyncSqlServerBulkInsertOptions
+                    {
+                        BatchSize = bulkCopyRowsPerBatch,
+                        CancellationToken = cancellationToken,
+                        UseOrdinals = useOrdinals
+                    });
                 
                 task.Success = true;
-                task.StatusMessage = $"Finished - {reader.Depth} Rows Copied";
+
+                task.StatusMessage = $"Finished - {sourceReader.Depth} Rows Read / {drr.Depth} Rows Copied";
             }
             //csv reader doesn't report depth
             catch (Exception ex)
             {
-                if (lastCopiedRow == -1 && reader.Depth <= 0)
+                if (lastCopiedRow == -1 && sourceReader.Depth <= 0)
                 {
                     task.StatusMessage = "No rows were copied. ";
                 }
                 else
                 {
-                    task.StatusMessage = $"{reader.Depth} total rows were read. ";
+                    task.StatusMessage = $"{sourceReader.Depth} total rows were read. ";
                 }
 
                 var inners = Try.Get(() => ex.ConcatenateInners(), "");
 
-                var readerDiagnostics = Try.Get(() => r?.PrintDiagnostics(), "");
+                var readerDiagnostics = Try.Get(() => smartReader?.PrintDiagnostics(), "");
 
                 task.StatusMessage += "Exception occurred: " + inners + ". " + readerDiagnostics;
             }
