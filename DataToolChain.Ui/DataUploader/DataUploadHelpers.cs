@@ -56,7 +56,7 @@ namespace DataToolChain
                 var reader = sourceReader;
 
 
-                if (filterNullColumns != null)
+                if (string.IsNullOrWhiteSpace(filterNullColumns) == false)
                 {
                     var cols = filterNullColumns.Split(",");
 
