@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
+using System.Dynamic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -85,6 +87,7 @@ namespace DataToolChain
         private string _password;
         private string _username;
         private string _excludeNullColumns;
+        private bool _reopenAfterUpload;
 
 
         public DataUploaderViewModel()
@@ -131,6 +134,12 @@ namespace DataToolChain
 
         public bool UseOrdinals { get; set; } = false;
 
+
+        public string CurrentTableName
+        {
+            get { return "Data Uploader - " + DestinationTable; }
+        }
+
         public string DestinationTable
         {
             get { return _destinationTable; }
@@ -138,6 +147,7 @@ namespace DataToolChain
             {
                 _destinationTable = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(CurrentTableName));
             }
         }
 
@@ -276,10 +286,22 @@ namespace DataToolChain
                 OnPropertyChanged();
             }
         }
+        
+        public bool ReopenAfterUpload
+        {
+            get => _reopenAfterUpload;
+            set
+            {
+                _reopenAfterUpload = value;
+                OnPropertyChanged();
+            }
+        }
 
         public Task CurrentTask { get; private set; }
 
         private CancellationTokenSource CancellationTokenSource { get; set; } = new CancellationTokenSource();
+
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -425,6 +447,18 @@ namespace DataToolChain
             {
                 CurrentTask = null;
                 WindowStatusDisplay = "Finished.";
+
+                if (ReopenAfterUpload)
+                {
+                    try
+                    {
+                        new Process { StartInfo = new ProcessStartInfo(DataUploaderTasks.First().FilePath) { UseShellExecute = true } }.Start();
+                    }
+                    catch (Exception e)
+                    {
+                        //
+                    }
+                }
             });
         }
         

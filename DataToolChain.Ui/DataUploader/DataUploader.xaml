@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DataToolChain"
         mc:Ignorable="d"
-        Title="Data Uploader" Height="835.867" Width="1207.8"
+        Title="{Binding CurrentTableName}" Height="835.867" Width="1207.8"
         d:DataContext="{d:DesignInstance Type=local:DataUploaderViewModel, IsDesignTimeCreatable=True}"
         >
     <Grid>
@@ -61,6 +61,7 @@
                 <CheckBox Margin="5" IsChecked="{Binding Path=UseOrdinals}" Content="Use Ordinals"/>
                 <CheckBox Margin="5" IsChecked="{Binding Path=ApplyDefaultTransformGroup}" Content="Apply Default Transform Group"/>
                 <CheckBox Margin="5" IsChecked="{Binding Path=TruncateTableFirst}">Truncate Tables First</CheckBox>
+                <CheckBox Margin="5" IsChecked="{Binding Path=ReopenAfterUpload}">Reopen File After Upload</CheckBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                 <Button Width="100" Margin="5" Click="ButtonGo_Click" Content="Go"/>

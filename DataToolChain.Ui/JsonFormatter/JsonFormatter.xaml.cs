@@ -57,7 +57,7 @@ namespace DataToolChain
 
         public string StringOutput
         {
-            get { return _stringOutput.JoinStr(); }
+            get { return _stringOutput; }
             set
             {
                 _stringOutput = value;

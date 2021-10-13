@@ -101,12 +101,15 @@ A high performance streaming implementation of outputting a SQL query to a comma
 ![Sql Query To Csv](assets/SqlQueryToCsv.JPG)
 
 
-### VI. JUST Transform Playground
+### VI. JUST Transformer Playground
 
 Experiment with JUST transforms for querying and transforming JSON data (similar to XSLT).
 
 More information here: https://github.com/WorkMaze/JUST.net
 
+### VII. JSON Formatter
+
+Paster json to format & indent.
 
 
 ## Upcoming Additions

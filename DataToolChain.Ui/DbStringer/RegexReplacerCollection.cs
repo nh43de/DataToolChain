@@ -48,6 +48,7 @@ namespace DataToolChain.DbStringer
             new RegexReplacement("Vertical list to double quoted, comma-separated list", @"^(.*?)\r?$", "\"$1\",", ","),
             new RegexReplacement("Vertical list to comma-separated list", @"\r\n", ","),
             new RegexReplacement("Comma-separated list to vertical list", @",\W+", "\r\n"),
+            new RegexReplacement("Tabbed list to comma-separated list", "\t",","),
             new RegexReplacement("NULLIF", @"(.*?)\r\n", @"NULLIF($1, 0),\r\n"),
             new RegexReplacement("Smart NULLIF", @"/ *(.*?) *,\r\n", @"/ NULLIF($1, 0),\r\n"),
             new RegexReplacement("Vertical list to SQL literal string", @"^(.*?)\r?$", "'$1' + CHAR(13) + CHAR(10)", " + CHAR(13) + CHAR(10)"),
