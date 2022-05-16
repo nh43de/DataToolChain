@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using DataPowerTools.Connectivity.Json;
 using DataPowerTools.Extensions;
+using DataToolChain.Ui.DbStringer;
 using DataToolChain.Ui.Extensions;
 
 namespace DataToolChain.DbStringer
@@ -186,8 +187,8 @@ namespace DataToolChain.DbStringer
                     Pattern = @"___",
                     Replacement = @".+"
                 }
-            })
-
+            }),
+            new RegexReplacement("Parse Hours", ParseHours.Parse)
         };
     }
 }
