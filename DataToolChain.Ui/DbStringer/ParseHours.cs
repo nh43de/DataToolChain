@@ -52,7 +52,7 @@ namespace DataToolChain.Ui.DbStringer
 
                 var tsDiff = tsEnd - tsStart;
 
-                var r = $"{tsStart.Hours}:{tsStart.Minutes:D2}-{tsEnd.Hours}:{tsEnd.Minutes:D2} => {Math.Round(tsDiff.TotalHours, 2)} hours";
+                var r = $"{tsStart.Hours}:{tsStart.Minutes:D2}-{tsEnd.Hours}:{tsEnd.Minutes:D2} \t{Math.Round(tsDiff.TotalHours, 2)}\thours";
 
                 return r;
             });
