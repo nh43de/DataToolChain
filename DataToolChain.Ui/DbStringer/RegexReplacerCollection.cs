@@ -41,7 +41,7 @@ namespace DataToolChain.DbStringer
 
 
 
-
+        //
 
         public static List<RegexReplacement> BuiltinReplacementsList => new List<RegexReplacement>
         {
@@ -53,7 +53,19 @@ namespace DataToolChain.DbStringer
             new RegexReplacement("NULLIF", @"(.*?)\r\n", @"NULLIF($1, 0),\r\n"),
             new RegexReplacement("Smart NULLIF", @"/ *(.*?) *,\r\n", @"/ NULLIF($1, 0),\r\n"),
             new RegexReplacement("Vertical list to SQL literal string", @"^(.*?)\r?$", "'$1' + CHAR(13) + CHAR(10)", " + CHAR(13) + CHAR(10)"),
-            new RegexReplacement("Vertical list to SQL UNIONS", @"^(.*?)\r?$", "SELECT '$1' \r\nUNION", "\r\nUNION"),
+
+            new RegexReplacement("Vertical list to SQL UNIONS", new []
+            {
+                new RegexReplacement.RegexReplacementStep {
+                    Pattern = @"'",
+                    Replacement = "''"
+                },
+                new RegexReplacement.RegexReplacementStep {
+                    Pattern = @"^(.*?)\r?$",
+                    Replacement = "SELECT '$1' \r\nUNION",
+                    TrimEndString = "\r\nUNION"
+                }
+            }),
             new RegexReplacement("Vertical list to SQL UNION ALL", @"^(.*?)\r?$", "SELECT '$1' \r\nUNION ALL", "\r\nUNION ALL"),
             new RegexReplacement("", @"\r", "SELECT '$1' \r\nUNION ALL", "\r\nUNION ALL"),
             new RegexReplacement("Sql Input Params Into Declarations", @"^.*?(@\w+.*?)(,|$).*?(--|/\*)?.*", "DECLARE $1"),
