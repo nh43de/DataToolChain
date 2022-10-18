@@ -82,6 +82,24 @@ namespace DataToolChain.DbStringer
                     TrimEndString = "\r\nUNION ALL"
                 }
             }),
+            new RegexReplacement("Tabs to SQL Columns", new[]
+            {
+                new RegexReplacement.RegexReplacementStep
+                {
+                    Pattern = "^",
+                    Replacement = "UNION SELECT '"
+                },
+                new RegexReplacement.RegexReplacementStep
+                {
+                    Pattern = "\t",
+                    Replacement = "', '"
+                },
+                new RegexReplacement.RegexReplacementStep
+                {
+                    Pattern = "\r\n",
+                    Replacement = "'\r\n"
+                }
+            }),
             new RegexReplacement("", @"\r", "SELECT '$1' \r\nUNION ALL", "\r\nUNION ALL"),
             new RegexReplacement("Sql Input Params Into Declarations", @"^.*?(@\w+.*?)(,|$).*?(--|/\*)?.*", "DECLARE $1"),
             new RegexReplacement("Escape SQL String", "'", "''"),
@@ -146,24 +164,6 @@ namespace DataToolChain.DbStringer
                 {
                     Pattern = @"^[ \t]*\[?((?<=\[)[^\[\]]+(?=\])|[a-z0-9]+)\]?[ \t]*\[?([^\[\]]+)\]?[ \t]*(\([0-9]+\))?.*?,\r\n",
                     Replacement = @"DECLARE @$1 $2$3;\r\n"
-                }
-            }),
-            new RegexReplacement("Tabs to SQL Columns", new[]
-            {
-                new RegexReplacement.RegexReplacementStep
-                {
-                    Pattern = "^",
-                    Replacement = "UNION SELECT '"
-                },
-                new RegexReplacement.RegexReplacementStep
-                {
-                    Pattern = "\t",
-                    Replacement = "', '"
-                },
-                new RegexReplacement.RegexReplacementStep
-                {
-                    Pattern = "\r\n",
-                    Replacement = "'\r\n"
                 }
             }),
             new RegexReplacement("Generalize Regex - use ^^^ to enclose groups, and _________ to indicate a wildcard", new[]
