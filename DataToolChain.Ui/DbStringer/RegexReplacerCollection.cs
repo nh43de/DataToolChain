@@ -116,6 +116,10 @@ namespace DataToolChain.DbStringer
             }),
             new RegexReplacement("Escape Regex", Regex.Escape),
             new RegexReplacement("Unescape regex", Regex.Unescape),
+
+            new RegexReplacement("To Lower", s => s.ToLower()),
+            new RegexReplacement("To Upper", s => s.ToUpper()),
+
             new RegexReplacement("Trim", s => s.Split('\r').Select(x => x.Trim()).JoinStr("\r\n")),
             new RegexReplacement("Sort Alphabetically", s => Regex.Split(s, "\r\n?").OrderBy(x => x).JoinStr("\r\n")),
             new RegexReplacement("Sort by Length", s => Regex.Split(s, "\r\n?").OrderBy(x => x.Length).ThenBy(x => x).JoinStr("\r\n")),
