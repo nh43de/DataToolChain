@@ -120,6 +120,18 @@ namespace DataToolChain.DbStringer
             new RegexReplacement("To Lower", s => s.ToLower()),
             new RegexReplacement("To Upper", s => s.ToUpper()),
 
+            new RegexReplacement("Group and Count", s => Regex.Split(s, "\r\n?")
+                .Select(p => p.Trim())
+                .GroupBy(p => p)
+                .Select(p => new
+                {
+                    Count = p.Count(),
+                    Key = p.Key
+                })
+                .OrderByDescending(p => p.Count)
+                .Select(p => p.Key + '\t' + p.Count)
+                .JoinStr("\r\n")),
+
             new RegexReplacement("Trim", s => s.Split('\r').Select(x => x.Trim()).JoinStr("\r\n")),
             new RegexReplacement("Sort Alphabetically", s => Regex.Split(s, "\r\n?").OrderBy(x => x).JoinStr("\r\n")),
             new RegexReplacement("Sort by Length", s => Regex.Split(s, "\r\n?").OrderBy(x => x.Length).ThenBy(x => x).JoinStr("\r\n")),
