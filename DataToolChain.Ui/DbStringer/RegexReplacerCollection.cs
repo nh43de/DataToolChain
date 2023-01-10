@@ -1,4 +1,5 @@
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -38,7 +39,6 @@ namespace DataToolChain.DbStringer
                 return a;
             }
         }
-
 
 
         //
@@ -133,8 +133,11 @@ namespace DataToolChain.DbStringer
                 .JoinStr("\r\n")),
 
             new RegexReplacement("Trim", s => s.Split('\r').Select(x => x.Trim()).JoinStr("\r\n")),
+            
             new RegexReplacement("Sort Alphabetically", s => Regex.Split(s, "\r\n?").OrderBy(x => x).JoinStr("\r\n")),
+            new RegexReplacement("Sort Alphabetically Desc", s => Regex.Split(s, "\r\n?").OrderByDescending(x => x).JoinStr("\r\n")),
             new RegexReplacement("Sort by Length", s => Regex.Split(s, "\r\n?").OrderBy(x => x.Length).ThenBy(x => x).JoinStr("\r\n")),
+            new RegexReplacement("Sort by Length Desc", s => Regex.Split(s, "\r\n?").OrderByDescending(x => x.Length).ThenBy(x => x).JoinStr("\r\n")),
             //new RegexReplacement("Distinct", s => Regex.Split(s, "\r\n?").Select(x => x.Trim()).Distinct().JoinStr("\r\n")),
             new RegexReplacement("Distinct", s => s.Split('\r').Select(x => x.Trim()).Distinct().OrderBy(x => x).JoinStr("\r\n")),
             new RegexReplacement("Params to Tabs", new[]
@@ -255,7 +258,22 @@ namespace DataToolChain.DbStringer
                     Replacement = @".+"
                 }
             }),
-            new RegexReplacement("Parse Hours", ParseHours.Parse)
+            new RegexReplacement("Parse Hours", ParseHours.Parse),
+            new RegexReplacement("Format Json", s =>
+            {
+                try
+                {
+                    var o = s.ToObject<object>();
+
+                    var r = o.ToJson(true);
+
+                    return r;
+                }
+                catch (Exception)
+                {
+                    return "Error in Json.";
+                }
+            })
         };
     }
 }

@@ -25,7 +25,6 @@
 
   <ItemGroup>
     <Folder Include="ExcelFormulaExtractor\" />
-    <Folder Include="JsonFormatter\" />
     <Folder Include="SqlQueryToCsv\" />
   </ItemGroup>
 

@@ -107,11 +107,6 @@ Experiment with JUST transforms for querying and transforming JSON data (similar
 
 More information here: https://github.com/WorkMaze/JUST.net
 
-### VII. JSON Formatter
-
-Paster json to format & indent.
-
-
 ## Upcoming Additions
 
 - Json to c# class
