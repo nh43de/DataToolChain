@@ -20,5 +20,15 @@ namespace DataToolChain.DbStringer
         {
             _viewModel.UpdateOutputText();
         }
+
+        private void Apply_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.InputText = _viewModel.OutputText;
+        }
+
+        private void Copy_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(_viewModel.OutputText);
+        }
     }
 }

@@ -19,6 +19,7 @@ namespace DataToolChain.DbStringer
             {
                 _inputText = value;
                 UpdateOutputText();
+                OnPropertyChanged();
             }
         }
 
