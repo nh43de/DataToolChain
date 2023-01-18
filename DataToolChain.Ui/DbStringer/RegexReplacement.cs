@@ -81,6 +81,9 @@ namespace DataToolChain.DbStringer
 
         public static string RegexReplace(RegexReplacementStep r, string text)
         {
+            if (string.IsNullOrEmpty(text))
+                return string.Empty;
+
             var rtn = new Regex(r.Pattern, RegexOptions.Multiline).Replace(text, Regex.Unescape(r.Replacement));
             if (!string.IsNullOrWhiteSpace(r.TrimEndString) && rtn.EndsWith(r.TrimEndString))
             {
