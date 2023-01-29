@@ -69,6 +69,9 @@ namespace DataToolChain.DbStringer
 
         public static string RegexReplace(RegexReplacement r, string text)
         {
+            if (text == null)
+                return string.Empty;
+
             if (r.ReplacementFunc != null)
                 return r.ReplacementFunc.Invoke(text);
 

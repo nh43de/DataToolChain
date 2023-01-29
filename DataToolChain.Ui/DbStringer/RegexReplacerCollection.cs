@@ -1,6 +1,7 @@
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using DataPowerTools.Connectivity.Json;
@@ -117,8 +118,17 @@ namespace DataToolChain.DbStringer
             new RegexReplacement("Escape Regex", Regex.Escape),
             new RegexReplacement("Unescape regex", Regex.Unescape),
 
-            new RegexReplacement("To Lower", s => s.ToLower()),
-            new RegexReplacement("To Upper", s => s.ToUpper()),
+            new RegexReplacement("To Lower Case", s => s.ToLower()),
+            new RegexReplacement("To Upper Case", s => s.ToUpper()),
+
+            new RegexReplacement("To Title Case", s =>
+            {
+                var properCase = new CultureInfo("en-US", false).TextInfo;
+
+                s = properCase.ToTitleCase(s.ToLower());
+
+                return s;
+            }),
 
             new RegexReplacement("Group and Count", s => Regex.Split(s, "\r\n?")
                 .Select(p => p.Trim())
