@@ -28,7 +28,7 @@ namespace DataToolChain.DbStringer
 
         private void Copy_Click(object sender, RoutedEventArgs e)
         {
-            Clipboard.SetText(_viewModel.OutputText);
+            Clipboard.SetText(_viewModel.InputText);
         }
     }
 }

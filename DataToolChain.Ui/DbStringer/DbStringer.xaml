@@ -38,8 +38,10 @@
         </Grid>
 
         <Grid Grid.Row="2">
-            <Button Height="32px" Width="60px" Margin="8px" HorizontalAlignment="Left" Click="Apply_Click">Apply</Button>
-            <Button Height="32px" Width="60px" Margin="8px" HorizontalAlignment="Right" Click="Copy_Click">Copy</Button>
+            <StackPanel Orientation="Horizontal">
+                <Button Height="32px" Width="60px" Margin="8px" HorizontalAlignment="Left" Click="Apply_Click">Apply</Button>
+                <Button Height="32px" Width="60px" Margin="8px" HorizontalAlignment="Left" Click="Copy_Click">Copy</Button>
+            </StackPanel>
         </Grid>
 
     </Grid>
