@@ -176,7 +176,7 @@ namespace DataToolChain.DbStringer
                 },
                 new RegexReplacement.RegexReplacementStep
                 {
-                    Pattern = @"\",
+                    Pattern = @"\\",
                     Replacement = ""
                 },
                 new RegexReplacement.RegexReplacementStep
