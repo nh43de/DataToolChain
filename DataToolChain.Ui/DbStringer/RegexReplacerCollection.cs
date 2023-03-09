@@ -117,10 +117,16 @@ namespace DataToolChain.DbStringer
             }),
             new RegexReplacement("Escape Regex", Regex.Escape),
             new RegexReplacement("Unescape regex", Regex.Unescape),
-
+            new RegexReplacement("Unescape regex $ ", new[]
+            {
+                new RegexReplacement.RegexReplacementStep
+                {
+                    Pattern = @"\\\$",
+                    Replacement = @"\$"
+                }
+            }),
             new RegexReplacement("To Lower Case", s => s.ToLower()),
             new RegexReplacement("To Upper Case", s => s.ToUpper()),
-
             new RegexReplacement("To Title Case", s =>
             {
                 var properCase = new CultureInfo("en-US", false).TextInfo;
@@ -129,7 +135,6 @@ namespace DataToolChain.DbStringer
 
                 return s;
             }),
-
             new RegexReplacement("Group and Count", s => Regex.Split(s, "\r\n?")
                 .Select(p => p.Trim())
                 .GroupBy(p => p)
@@ -141,9 +146,15 @@ namespace DataToolChain.DbStringer
                 .OrderByDescending(p => p.Count)
                 .Select(p => p.Key + '\t' + p.Count)
                 .JoinStr("\r\n")),
-
             new RegexReplacement("Trim", s => s.Split('\r').Select(x => x.Trim()).JoinStr("\r\n")),
-            
+            new RegexReplacement("Condense Whitespace", new[]
+            {
+                new RegexReplacement.RegexReplacementStep
+                {
+                    Pattern = @"[ \t\r\n]+",
+                    Replacement = " "
+                }
+            }),
             new RegexReplacement("Sort Alphabetically", s => Regex.Split(s, "\r\n?").OrderBy(x => x).JoinStr("\r\n")),
             new RegexReplacement("Sort Alphabetically Desc", s => Regex.Split(s, "\r\n?").OrderByDescending(x => x).JoinStr("\r\n")),
             new RegexReplacement("Sort by Length", s => Regex.Split(s, "\r\n?").OrderBy(x => x.Length).ThenBy(x => x).JoinStr("\r\n")),
