@@ -135,6 +135,8 @@ namespace DataToolChain.DbStringer
 
                 return s;
             }),
+            //new RegexReplacement("Distinct", s => Regex.Split(s, "\r\n?").Select(x => x.Trim()).Distinct().JoinStr("\r\n")),
+            new RegexReplacement("Distinct", s => s.Split('\r').Select(x => x.Trim()).Distinct().OrderBy(x => x).JoinStr("\r\n")),
             new RegexReplacement("Group and Count", s => Regex.Split(s, "\r\n?")
                 .Select(p => p.Trim())
                 .GroupBy(p => p)
@@ -155,12 +157,39 @@ namespace DataToolChain.DbStringer
                     Replacement = " "
                 }
             }),
+            new RegexReplacement("Sanitize Column Names", new[]
+            {
+                new RegexReplacement.RegexReplacementStep
+                {
+                    Pattern = @" ",
+                    Replacement = ""
+                },
+                new RegexReplacement.RegexReplacementStep
+                {
+                    Pattern = @"#",
+                    Replacement = "Num"
+                },
+                new RegexReplacement.RegexReplacementStep
+                {
+                    Pattern = @"/",
+                    Replacement = ""
+                },
+                new RegexReplacement.RegexReplacementStep
+                {
+                    Pattern = @"\",
+                    Replacement = ""
+                },
+                new RegexReplacement.RegexReplacementStep
+                {
+                    Pattern = @"%",
+                    Replacement = "Pct"
+                },
+            }),
             new RegexReplacement("Sort Alphabetically", s => Regex.Split(s, "\r\n?").OrderBy(x => x).JoinStr("\r\n")),
             new RegexReplacement("Sort Alphabetically Desc", s => Regex.Split(s, "\r\n?").OrderByDescending(x => x).JoinStr("\r\n")),
             new RegexReplacement("Sort by Length", s => Regex.Split(s, "\r\n?").OrderBy(x => x.Length).ThenBy(x => x).JoinStr("\r\n")),
             new RegexReplacement("Sort by Length Desc", s => Regex.Split(s, "\r\n?").OrderByDescending(x => x.Length).ThenBy(x => x).JoinStr("\r\n")),
-            //new RegexReplacement("Distinct", s => Regex.Split(s, "\r\n?").Select(x => x.Trim()).Distinct().JoinStr("\r\n")),
-            new RegexReplacement("Distinct", s => s.Split('\r').Select(x => x.Trim()).Distinct().OrderBy(x => x).JoinStr("\r\n")),
+
             new RegexReplacement("Params to Tabs", new[]
             {
                 new RegexReplacement.RegexReplacementStep
