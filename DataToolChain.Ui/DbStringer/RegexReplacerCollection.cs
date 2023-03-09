@@ -161,23 +161,13 @@ namespace DataToolChain.DbStringer
             {
                 new RegexReplacement.RegexReplacementStep
                 {
-                    Pattern = @" ",
+                    Pattern = @"[ \\\)\(\[\]/-]",
                     Replacement = ""
                 },
                 new RegexReplacement.RegexReplacementStep
                 {
                     Pattern = @"#",
                     Replacement = "Num"
-                },
-                new RegexReplacement.RegexReplacementStep
-                {
-                    Pattern = @"/",
-                    Replacement = ""
-                },
-                new RegexReplacement.RegexReplacementStep
-                {
-                    Pattern = @"\\",
-                    Replacement = ""
                 },
                 new RegexReplacement.RegexReplacementStep
                 {
