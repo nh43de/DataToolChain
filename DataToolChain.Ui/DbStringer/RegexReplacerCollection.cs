@@ -175,6 +175,14 @@ namespace DataToolChain.DbStringer
                     Replacement = "Pct"
                 },
             }),
+            new RegexReplacement("Sanitize Quotes", new[]
+            {
+                new RegexReplacement.RegexReplacementStep
+                {
+                    Pattern = @"['‘’“”]",
+                    Replacement = "\""
+                }
+            }),
             new RegexReplacement("Sort Alphabetically", s => Regex.Split(s, "\r\n?").OrderBy(x => x).JoinStr("\r\n")),
             new RegexReplacement("Sort Alphabetically Desc", s => Regex.Split(s, "\r\n?").OrderByDescending(x => x).JoinStr("\r\n")),
             new RegexReplacement("Sort by Length", s => Regex.Split(s, "\r\n?").OrderBy(x => x.Length).ThenBy(x => x).JoinStr("\r\n")),
