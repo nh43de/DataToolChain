@@ -149,7 +149,6 @@ namespace DataToolChain.Ui.ExcelVlookupRemover
                 stack.Push(parseTree);
 
                 //var allNodes = Traverse(item2, node => node.ChildNodes).ToArray();
-                //EnumerableExtensions.WriteCsv(allNodes, @"C:\Users\Nathan Hollis\OneDrive\Consulting\Alm\FNP Liq\Nodes.csv");
 
                 while (stack.Any())
                 {
