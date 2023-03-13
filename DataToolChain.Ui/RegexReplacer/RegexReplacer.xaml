@@ -1,0 +1,55 @@
+﻿<Window x:Class="DataToolChain.RegexReplacer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DataToolChain"
+        xmlns:regexMaker="clr-namespace:DataToolChain.RegexMaker"
+        mc:Ignorable="d"
+         d:DataContext="{d:DesignInstance Type=regexMaker:RegexReplacerViewModel, IsDesignTimeCreatable=True}"
+        Title="RegexReplacer" Height="600" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="150*"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="410*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Background="Beige">
+            <TextBlock TextWrapping="Wrap" Margin="5">(Top) Enter List of Regexes on the Left, and their corresponding replacements on the right (if no replacement value specified then will remove). (Bottom) Enter text on left, new text appears on right. </TextBlock>
+            <StackPanel Margin="5">
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Path=IsCaseSensitive}">Match Case</CheckBox>
+                    <CheckBox IsChecked="{Binding Path=EachLine}" Margin="20,0,0,0">Each Line</CheckBox>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Path=UseRegex}">Use Regex</CheckBox>
+                    <CheckBox IsChecked="{Binding Path=Multiline}" Margin="20,0,0,0">Match newline</CheckBox>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+        <Grid Grid.Row="1" Background="Beige">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="395*"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="424*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox AcceptsReturn="True" AcceptsTab="True" TextWrapping="NoWrap" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Text="{Binding Path=RegexMatchInputs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <GridSplitter Grid.Column="1" Background="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></GridSplitter>
+            <TextBox Grid.Column="2" AcceptsReturn="True" AcceptsTab="True"  TextWrapping="NoWrap" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Text="{Binding Path=RegexReplaceInputs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        </Grid>
+        <GridSplitter Grid.Row="2" Background="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></GridSplitter>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="395*"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="424*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox AcceptsReturn="True" AcceptsTab="True" TextWrapping="NoWrap" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Text="{Binding Path=StringInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <GridSplitter Grid.Column="1" Background="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></GridSplitter>
+            <TextBox Grid.Column="2" TextWrapping="NoWrap" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Text="{Binding Path=StringOutput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        </Grid>
+
+    </Grid>
+</Window>

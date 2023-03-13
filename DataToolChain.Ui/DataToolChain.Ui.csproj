@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="ExcelFormulaExtractor\" />
+    <Folder Include="RegexReplacer\" />
     <Folder Include="SqlQueryToCsv\" />
   </ItemGroup>
 
