@@ -23,11 +23,5 @@
     <PackageReference Include="XLParser" Version="1.4.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ExcelFormulaExtractor\" />
-    <Folder Include="RegexMatcher\" />
-    <Folder Include="RegexReplacer\" />
-    <Folder Include="SqlQueryToCsv\" />
-  </ItemGroup>
 
 </Project>
