@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using DataPowerTools.Extensions;
 using DataToolChain.Ui.Extensions;
 
 namespace DataToolChain.Ui.DbStringer

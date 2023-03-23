@@ -321,6 +321,36 @@ namespace DataToolChain.DbStringer
                 {
                     return "Error in Json.";
                 }
+            }),
+            new RegexReplacement("UnPivot table CSV (tab)", s =>
+            {
+                try
+                {
+                    var o = s.ReadCsvString('\t', true);
+
+                    var dd = o.UnPivot();
+
+                    return dd.AsCsv(true, true);
+                }
+                catch (Exception)
+                {
+                    return "Error reading csv table";
+                }
+            }),
+            new RegexReplacement("UnPivot table CSV (comma)", s =>
+            {
+                try
+                {
+                    var o = s.ReadCsvString(',', true);
+
+                    var dd = o.UnPivot();
+
+                    return dd.AsCsv(true, false);
+                }
+                catch (Exception)
+                {
+                    return "Error reading csv table";
+                }
             })
         };
     }

@@ -247,7 +247,7 @@ namespace DataToolChain
 
                                 var dropSql = $"DELETE FROM {tableName};";
 
-                                await dest.ExecuteSqlAsync(dropSql, null, cancellationToken);
+                                await dest.ExecuteSqlAsync(dropSql, null, null, cancellationToken);
                             }
                         }
 

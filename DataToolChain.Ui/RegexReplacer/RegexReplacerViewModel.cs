@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using DataPowerTools.Extensions;
 using DataToolChain.Ui.Extensions;
 
 namespace DataToolChain.RegexMaker
