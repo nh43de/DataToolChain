@@ -171,6 +171,11 @@ namespace DataToolChain.DbStringer
                 },
                 new RegexReplacement.RegexReplacementStep
                 {
+                    Pattern = @"$",
+                    Replacement = "Dollar"
+                },
+                new RegexReplacement.RegexReplacementStep
+                {
                     Pattern = @"%",
                     Replacement = "Pct"
                 },
