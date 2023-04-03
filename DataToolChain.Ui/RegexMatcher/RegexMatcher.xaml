@@ -25,14 +25,14 @@
                 <StackPanel Orientation="Horizontal">
                     <CheckBox IsChecked="{Binding Path=IsCaseSensitive}">Match Case</CheckBox>
                     <CheckBox IsChecked="{Binding Path=Unique}" Margin="10,0,0,0">Unique</CheckBox>
+                    <CheckBox IsChecked="{Binding Path=PrintGroups}" Margin="10,0,0,0">Print Groups Only</CheckBox>
                 </StackPanel>
-                
+
                 <StackPanel Orientation="Horizontal">
                     <CheckBox IsChecked="{Binding Path=UseRegex}">Use Regex</CheckBox>
                     <CheckBox IsChecked="{Binding Path=Multiline}" Margin="10,0,0,0">Match newline</CheckBox>
                 </StackPanel>
-                
-                
+
             </StackPanel>
         </StackPanel>
         
