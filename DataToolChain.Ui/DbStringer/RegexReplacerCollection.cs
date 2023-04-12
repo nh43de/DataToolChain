@@ -51,10 +51,7 @@ namespace DataToolChain.DbStringer
             new RegexReplacement("Vertical list to comma-separated list", @"\r\n", ","),
             new RegexReplacement("Comma-separated list to vertical list", @",\W*", "\r\n"),
             new RegexReplacement("Tabbed list to comma-separated list", "\t", ","),
-            new RegexReplacement("NULLIF", @"(.*?)\r\n", @"NULLIF($1, 0),\r\n"),
-            new RegexReplacement("Smart NULLIF", @"/ *(.*?) *,\r\n", @"/ NULLIF($1, 0),\r\n"),
             new RegexReplacement("Vertical list to SQL literal string", @"^(.*?)\r?$", "'$1' + CHAR(13) + CHAR(10)", " + CHAR(13) + CHAR(10)"),
-
             new RegexReplacement("Vertical list to SQL UNIONS", new[]
             {
                 new RegexReplacement.RegexReplacementStep
@@ -83,6 +80,9 @@ namespace DataToolChain.DbStringer
                     TrimEndString = "\r\nUNION ALL"
                 }
             }),
+
+            new RegexReplacement("NULLIF", @"(.*?)\r\n", @"NULLIF($1, 0),\r\n"),
+            new RegexReplacement("Smart NULLIF", @"/ *(.*?) *,\r\n", @"/ NULLIF($1, 0),\r\n"),
             new RegexReplacement("Tabs to SQL Columns", new[]
             {
                 new RegexReplacement.RegexReplacementStep
@@ -135,6 +135,7 @@ namespace DataToolChain.DbStringer
 
                 return s;
             }),
+            new RegexReplacement("Trim", s => s.Split('\r').Select(x => x.Trim()).JoinStr("\r\n")),
             //new RegexReplacement("Distinct", s => Regex.Split(s, "\r\n?").Select(x => x.Trim()).Distinct().JoinStr("\r\n")),
             new RegexReplacement("Distinct", s => s.Split('\r').Select(x => x.Trim()).Distinct().OrderBy(x => x).JoinStr("\r\n")),
             new RegexReplacement("Group and Count", s => Regex.Split(s, "\r\n?")
@@ -148,7 +149,10 @@ namespace DataToolChain.DbStringer
                 .OrderByDescending(p => p.Count)
                 .Select(p => p.Key + '\t' + p.Count)
                 .JoinStr("\r\n")),
-            new RegexReplacement("Trim", s => s.Split('\r').Select(x => x.Trim()).JoinStr("\r\n")),
+            new RegexReplacement("Sort Alphabetically", s => Regex.Split(s, "\r\n?").OrderBy(x => x).JoinStr("\r\n")),
+            new RegexReplacement("Sort Alphabetically Desc", s => Regex.Split(s, "\r\n?").OrderByDescending(x => x).JoinStr("\r\n")),
+            new RegexReplacement("Sort by Length", s => Regex.Split(s, "\r\n?").OrderBy(x => x.Length).ThenBy(x => x).JoinStr("\r\n")),
+            new RegexReplacement("Sort by Length Desc", s => Regex.Split(s, "\r\n?").OrderByDescending(x => x.Length).ThenBy(x => x).JoinStr("\r\n")),
             new RegexReplacement("Condense Whitespace", new[]
             {
                 new RegexReplacement.RegexReplacementStep
@@ -188,11 +192,6 @@ namespace DataToolChain.DbStringer
                     Replacement = "\""
                 }
             }),
-            new RegexReplacement("Sort Alphabetically", s => Regex.Split(s, "\r\n?").OrderBy(x => x).JoinStr("\r\n")),
-            new RegexReplacement("Sort Alphabetically Desc", s => Regex.Split(s, "\r\n?").OrderByDescending(x => x).JoinStr("\r\n")),
-            new RegexReplacement("Sort by Length", s => Regex.Split(s, "\r\n?").OrderBy(x => x.Length).ThenBy(x => x).JoinStr("\r\n")),
-            new RegexReplacement("Sort by Length Desc", s => Regex.Split(s, "\r\n?").OrderByDescending(x => x.Length).ThenBy(x => x).JoinStr("\r\n")),
-
             new RegexReplacement("Params to Tabs", new[]
             {
                 new RegexReplacement.RegexReplacementStep
