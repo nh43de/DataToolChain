@@ -31,11 +31,11 @@ namespace DataToolChain.DbStringer
             };
         }
 
-        private IEnumerable<RegexReplacementStep> RegexReplacementSteps { get; set; }
+        private IEnumerable<IRegexReplacementStep> RegexReplacementSteps { get; set; }
 
         private Func<string, string> ReplacementFunc { get; set; } = null;
 
-        public RegexReplacement(string name, IEnumerable<RegexReplacementStep> replacementSteps) : this(name)
+        public RegexReplacement(string name, IEnumerable<IRegexReplacementStep> replacementSteps) : this(name)
         {
             
             RegexReplacementSteps = replacementSteps;
@@ -46,7 +46,50 @@ namespace DataToolChain.DbStringer
             ReplacementFunc = replacementFunc;
         }
 
-        public class RegexReplacementStep
+        public interface IRegexReplacementStep
+        {
+            string Pattern { get; }
+            string Replacement { get; }
+            string TrimEndString { get; }
+            string DisplayText { get; }
+
+            string Process(string input);
+        }
+
+        public class RegexReplacementStepFunc : IRegexReplacementStep
+        {
+            private readonly Func<string, string> _replacementFunc;
+            public string Pattern { get; } = "input";
+            public string Replacement { get; set; }
+
+            public string TrimEndString { get; set; }
+            public string DisplayText => $"[{Pattern}] -> [{Replacement}]";
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="replacementFunc"></param>
+            /// <param name="replacementSummary">Description of the replacement func</param>
+            /// <param name="trimEndString"></param>
+            public RegexReplacementStepFunc(Func<string, string> replacementFunc, string replacementSummary, string trimEndString = null)
+            {
+                _replacementFunc = replacementFunc;
+                Replacement = replacementSummary;
+                TrimEndString = trimEndString;
+            }
+
+            public RegexReplacementStepFunc()
+            {
+
+            }
+
+            public string Process(string input)
+            {
+                return _replacementFunc(input);
+            }
+        }
+
+        public class RegexReplacementStep : IRegexReplacementStep
         {
             public string Pattern { get; set; }
             public string Replacement { get; set; }
@@ -65,6 +108,11 @@ namespace DataToolChain.DbStringer
             {
 
             }
+
+            public string Process(string input)
+            {
+                return RegexReplace(this, input);
+            }
         }
 
         public static string RegexReplace(RegexReplacement r, string text)
@@ -78,8 +126,7 @@ namespace DataToolChain.DbStringer
             return r
                 .RegexReplacementSteps
                 .Aggregate(text, (current, regexReplacementStep) 
-                    => RegexReplace(regexReplacementStep, current
-                )); //aggregates all the regex replacement steps
+                    => regexReplacementStep.Process(current)); //aggregates all the regex replacement steps
         }
 
         public static string RegexReplace(RegexReplacementStep r, string text)
@@ -97,6 +144,5 @@ namespace DataToolChain.DbStringer
         }
 
         public string DisplayText => Name + ": " + RegexReplacementSteps?.Select((r, i) => r.DisplayText).JoinStr("\r\n");
-
     }
 }

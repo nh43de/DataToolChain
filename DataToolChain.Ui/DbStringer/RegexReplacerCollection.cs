@@ -80,11 +80,12 @@ namespace DataToolChain.DbStringer
                     TrimEndString = "\r\nUNION ALL"
                 }
             }),
-            new RegexReplacement("Vertical list to Regex alternative match expression", new[]
+            new RegexReplacement("Vertical list to Regex alternative match expression", new RegexReplacement.IRegexReplacementStep[]
             {
+                new RegexReplacement.RegexReplacementStepFunc(Regex.Escape, "regex escape"),
                 new RegexReplacement.RegexReplacementStep
                 {
-                    Pattern = @"(.*?)(\r\n|\r|\n)",
+                    Pattern = @"(.*?)(\\r\\n|\\r|\\n)",
                     Replacement = "$1|"
                 },
                 new RegexReplacement.RegexReplacementStep
