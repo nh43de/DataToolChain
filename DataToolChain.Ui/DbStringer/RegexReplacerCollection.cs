@@ -80,7 +80,24 @@ namespace DataToolChain.DbStringer
                     TrimEndString = "\r\nUNION ALL"
                 }
             }),
-
+            new RegexReplacement("Vertical list to Regex alternative match expression", new[]
+            {
+                new RegexReplacement.RegexReplacementStep
+                {
+                    Pattern = @"(.*?)(\r\n|\r|\n)",
+                    Replacement = "$1|"
+                },
+                new RegexReplacement.RegexReplacementStep
+                {
+                    Pattern = @"^",
+                    Replacement = "\\("
+                },
+                new RegexReplacement.RegexReplacementStep
+                {
+                    Pattern = @"$",
+                    Replacement = "\\)"
+                },
+            }),
             new RegexReplacement("NULLIF", @"(.*?)\r\n", @"NULLIF($1, 0),\r\n"),
             new RegexReplacement("Smart NULLIF", @"/ *(.*?) *,\r\n", @"/ NULLIF($1, 0),\r\n"),
             new RegexReplacement("Tabs to SQL Columns", new[]
