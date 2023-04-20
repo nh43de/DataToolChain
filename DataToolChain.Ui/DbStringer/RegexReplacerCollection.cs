@@ -456,7 +456,7 @@ namespace DataToolChain.DbStringer
                     return "Error reading csv table";
                 }
             }),
-            new RegexReplacement("JSON to CSV (comma)", s =>
+            new RegexReplacement("CSV (comma) to JSON", s =>
             {
                 try
                 {
