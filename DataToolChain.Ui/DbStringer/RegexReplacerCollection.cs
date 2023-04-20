@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using DataPowerTools.Connectivity.Json;
 using DataPowerTools.Extensions;
+using DataPowerTools.PowerTools;
 using DataToolChain.Ui.DbStringer;
 using DataToolChain.Ui.Extensions;
 
@@ -376,7 +377,7 @@ namespace DataToolChain.DbStringer
             }),
 
 
-            new RegexReplacement("Create Table from CSV (tab)", s =>
+            new RegexReplacement("CSV (tab) to Create Table SQL", s =>
             {
                 try
                 {
@@ -391,7 +392,7 @@ namespace DataToolChain.DbStringer
                     return "Error reading csv table";
                 }
             }),
-            new RegexReplacement("Create Table from CSV (comma)", s =>
+            new RegexReplacement("CSV (comma) to Create Table SQL", s =>
             {
                 try
                 {
@@ -406,6 +407,113 @@ namespace DataToolChain.DbStringer
                     return "Error reading csv table";
                 }
             }),
+            //
+            new RegexReplacement("CSV (tab) to SQL inserts", s =>
+            {
+                try
+                {
+                    var o = s.ReadCsvString('\t', true);
+
+                    var dd = o.AsSqlInsertStatements("MyTable", DatabaseEngine.SqlServer);
+
+                    return dd;
+                }
+                catch (Exception)
+                {
+                    return "Error reading csv table";
+                }
+            }),
+            new RegexReplacement("CSV (comma) to SQL inserts", s =>
+            {
+                try
+                {
+                    var o = s.ReadCsvString(',', true);
+
+                    var dd = o.AsSqlInsertStatements("MyTable", DatabaseEngine.SqlServer);
+
+                    return dd;
+                }
+                catch (Exception)
+                {
+                    return "Error reading csv table";
+                }
+            }),
+
+
+
+            new RegexReplacement("CSV (tab) to JSON", s =>
+            {
+                try
+                {
+                    var o = s.ReadCsvString('\t', true);
+
+                    var dd = o.ReadToJson(true);
+
+                    return dd;
+                }
+                catch (Exception)
+                {
+                    return "Error reading csv table";
+                }
+            }),
+            new RegexReplacement("JSON to CSV (comma)", s =>
+            {
+                try
+                {
+                    var o = s.ReadCsvString(',', true);
+
+                    var dd = o.ReadToJson( true);
+
+                    return dd;
+                }
+                catch (Exception)
+                {
+                    return "Error reading csv table";
+                }
+            }),
+
+            new RegexReplacement("JSON to SQL inserts", s =>
+            {
+                try
+                {
+                    var dd = s.FromJsonToSqlInsertStatements("MyTable", DatabaseEngine.SqlServer);
+
+                    return dd;
+                }
+                catch (Exception)
+                {
+                    return "Error reading csv table";
+                }
+            }),
+
+            new RegexReplacement("JSON to CSV (comma)", s =>
+            {
+                try
+                {
+                    var dd = s.FromJsonToCsv(true, ',');
+
+                    return dd;
+                }
+                catch (Exception)
+                {
+                    return "Error reading csv table";
+                }
+            }),
+
+            new RegexReplacement("JSON to CSV (tab)", s =>
+            {
+                try
+                {
+                    var dd = s.FromJsonToCsv(true, '\t');
+
+                    return dd;
+                }
+                catch (Exception)
+                {
+                    return "Error reading csv table";
+                }
+            })
+
         };
     }
 }

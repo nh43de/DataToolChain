@@ -67,7 +67,7 @@ A collection of handy string operations. String together IN statements in SQL, o
 
 ![DbStringer](assets/dbstringer.gif)
 
-##### List of String Manipulation Features
+##### List of String Manipulation Features (DbStringer)
 
  - Comma-separated list to vertical list
  - Distinct
@@ -93,6 +93,14 @@ A collection of handy string operations. String together IN statements in SQL, o
  - Vertical list to SQL literal string
  - Vertical list to SQL UNION ALL
  - Vertical list to SQL UNIONS
+ - Parse hours - parses any hour ranges in the text i.e. 1:30am-3pm. Great for parsing time sheets.
+ - NEW! UnPivot table CSV - unpivots 2-axis matrices into a 3-column table
+ - NEW! Create Table from CSV - fits csv data into an appropriate CREATE TABLE sql statement
+ - NEW! Generate SQL inserts from CSV - generates SQL insert statements from csv data
+ - NEW! Generate JSON from CSV - fits csv data into a json object
+ - NEW! Generate SQL inserts from JSON - generates SQL insert statements from an array of json objects
+ - NEW! Generate CSV from JSON 
+
 
 ### V. Sql Query to .csv
 
