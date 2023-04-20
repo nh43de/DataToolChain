@@ -490,7 +490,7 @@ namespace DataToolChain.DbStringer
             {
                 try
                 {
-                    var dd = s.FromJsonToCsv(true, ',');
+                    var dd = s.FromJsonToCsv(true, false);
 
                     return dd;
                 }
@@ -504,7 +504,7 @@ namespace DataToolChain.DbStringer
             {
                 try
                 {
-                    var dd = s.FromJsonToCsv(true, '\t');
+                    var dd = s.FromJsonToCsv(true, true);
 
                     return dd;
                 }
