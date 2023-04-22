@@ -441,7 +441,7 @@ namespace DataToolChain.DbStringer
 
 
 
-            new RegexReplacement("CSV (tab) to JSON", s =>
+            new RegexReplacement("CSV (tab) to JSON array", s =>
             {
                 try
                 {
@@ -456,7 +456,7 @@ namespace DataToolChain.DbStringer
                     return "Error reading csv table";
                 }
             }),
-            new RegexReplacement("CSV (comma) to JSON", s =>
+            new RegexReplacement("CSV (comma) to JSON array", s =>
             {
                 try
                 {
@@ -472,7 +472,7 @@ namespace DataToolChain.DbStringer
                 }
             }),
 
-            new RegexReplacement("JSON to SQL inserts", s =>
+            new RegexReplacement("JSON array to SQL inserts", s =>
             {
                 try
                 {
@@ -486,7 +486,7 @@ namespace DataToolChain.DbStringer
                 }
             }),
 
-            new RegexReplacement("JSON to CSV (comma)", s =>
+            new RegexReplacement("JSON array to CSV (comma)", s =>
             {
                 try
                 {
@@ -500,7 +500,7 @@ namespace DataToolChain.DbStringer
                 }
             }),
 
-            new RegexReplacement("JSON to CSV (tab)", s =>
+            new RegexReplacement("JSON array to CSV (tab)", s =>
             {
                 try
                 {
