@@ -407,7 +407,7 @@ namespace DataToolChain.DbStringer
                     return "Error reading csv table";
                 }
             }),
-            //
+            //sql inserts
             new RegexReplacement("CSV (tab) to SQL inserts", s =>
             {
                 try
@@ -439,8 +439,40 @@ namespace DataToolChain.DbStringer
                 }
             }),
 
+            
+            //sql selects
+            new RegexReplacement("CSV (tab) to SQL selects", s =>
+            {
+                try
+                {
+                    var o = s.ReadCsvString('\t', true);
 
+                    var dd = o.AsSqlSelectStatements(DatabaseEngine.SqlServer);
 
+                    return dd;
+                }
+                catch (Exception)
+                {
+                    return "Error reading csv table";
+                }
+            }),
+            new RegexReplacement("CSV (comma) to SQL selects", s =>
+            {
+                try
+                {
+                    var o = s.ReadCsvString(',', true);
+
+                    var dd = o.AsSqlSelectStatements(DatabaseEngine.SqlServer);
+
+                    return dd;
+                }
+                catch (Exception)
+                {
+                    return "Error reading csv table";
+                }
+            }),
+
+            //
             new RegexReplacement("CSV (tab) to JSON array", s =>
             {
                 try
