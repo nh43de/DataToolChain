@@ -154,7 +154,7 @@ fox";
         {
             var matchesInput = RegexMatchInputs.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
 
-            var patternStringDictionary = new StringLengthDictionary();
+            var patternStringDictionary = new StringStartingPosDictionary();
 
             try
             {
@@ -168,7 +168,7 @@ fox";
 
                 foreach (var m in dd)
                 {
-                    patternStringDictionary.Add(m.Index, m.Value.Trim());
+                    patternStringDictionary.Add(m.Index, _printGroups ? m.Groups[1].Value : m.Value);
                 }
 
                 if (Unique)
@@ -192,24 +192,30 @@ fox";
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private class StringLengthDictionary
+        /// <summary>
+        /// Stores strings keyed by their starting position
+        /// </summary>
+        private class StringStartingPosDictionary
         {
-            private Dictionary<int, string> PatternStringDictionary { get; set; } = new Dictionary<int, string>();
+            private Dictionary<int, string> StartingPosDictionary { get; set; } = new Dictionary<int, string>();
             
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="pos">The starting position of the match</param>
+            /// <param name="value"></param>
             public void Add(int pos, string value)
             {
-                if (PatternStringDictionary.ContainsKey(pos) == false)
+                if (StartingPosDictionary.ContainsKey(pos) == false)
                 {
-                    PatternStringDictionary.Add(pos, value);
+                    StartingPosDictionary.Add(pos, value);
                 }
             }
 
             public IEnumerable<string> GetValues()
             {
-                return PatternStringDictionary.Select(d => d.Value);
+                return StartingPosDictionary.Select(d => d.Value);
             }
-
-
         }
 
     }
