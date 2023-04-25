@@ -36,7 +36,8 @@ fox";
         private bool _useRegex;
         private bool _isCaseSensitive = false;
         private bool _multiline;
-        private bool _unique;
+        private bool _printGroups;
+        private bool _unique; 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public bool IsCaseSensitive
@@ -71,6 +72,18 @@ fox";
                 UpdateOutput();
             }
         }
+
+        public bool PrintGroups
+        {
+            get { return _printGroups; }
+            set
+            {
+                _printGroups = value;
+                UpdateOutput();
+            }
+        }
+
+        
 
         public bool UseRegex
         {
@@ -193,7 +206,7 @@ fox";
 
             public IEnumerable<string> GetValues()
             {
-                return PatternStringDictionary.Select(d => $"{d.Value}");
+                return PatternStringDictionary.Select(d => d.Value);
             }
 
 
