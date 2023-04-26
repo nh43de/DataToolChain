@@ -414,7 +414,7 @@ namespace DataToolChain.DbStringer
                 {
                     var o = s.ReadCsvString('\t', true);
 
-                    var dd = o.AsSqlInsertStatements("MyTable", DatabaseEngine.SqlServer);
+                    var dd = o.AsSqlInsertStatements("[MyTable]", DatabaseEngine.SqlServer);
 
                     return dd;
                 }
@@ -429,7 +429,7 @@ namespace DataToolChain.DbStringer
                 {
                     var o = s.ReadCsvString(',', true);
 
-                    var dd = o.AsSqlInsertStatements("MyTable", DatabaseEngine.SqlServer);
+                    var dd = o.AsSqlInsertStatements("[MyTable]", DatabaseEngine.SqlServer);
 
                     return dd;
                 }
@@ -508,7 +508,7 @@ namespace DataToolChain.DbStringer
             {
                 try
                 {
-                    var dd = s.FromJsonToSqlInsertStatements("MyTable", DatabaseEngine.SqlServer);
+                    var dd = s.FromJsonToSqlInsertStatements("[MyTable]", DatabaseEngine.SqlServer);
 
                     return dd;
                 }
