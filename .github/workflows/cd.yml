@@ -31,7 +31,7 @@ jobs:
     env:
       Solution_Path: DataToolChain.sln
       Wpf_Project_Path: DataToolChain.Ui\DataToolChain.Ui.csproj
-      Output_Directory: DataToolChain.Ui\bin\Debug\netcoreapp3.1
+      Output_Directory: DataToolChain.Ui\bin\Debug\net7.0-windows
       Wpf_Binary_Archive: DataToolChain.zip
 
     steps:
@@ -55,7 +55,7 @@ jobs:
     - name: Install .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '3.1.x'
+        dotnet-version: '7.0.x'
 
     # Build
     - name: Build application
