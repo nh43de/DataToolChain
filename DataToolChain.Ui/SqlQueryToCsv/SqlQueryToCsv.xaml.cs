@@ -111,7 +111,8 @@ namespace DataToolChain
                 var sqlcstr = new SqlConnectionStringBuilder
                 {
                     InitialCatalog = Database,
-                    DataSource = ServerName
+                    DataSource = ServerName,
+                    TrustServerCertificate = true
                 };
 
                 if (string.IsNullOrEmpty(this.Username))
@@ -124,7 +125,7 @@ namespace DataToolChain
                     sqlcstr.UserID = Username;
                     sqlcstr.Password = Password;
                 }
-
+                
                 using var sqlConn = sqlcstr.ConnectionString.CreateSqlConnection();
 
                 //sqlConn.Open();
