@@ -407,6 +407,39 @@ namespace DataToolChain.DbStringer
                     return "Error reading csv table";
                 }
             }),
+
+            new RegexReplacement("CSV (tab) to C# Class", s =>
+            {
+                try
+                {
+                    var o = s.ReadCsvString('\t', true);
+
+                    var dd = o.FitToCsharpClass("MyClass", null);
+
+                    return dd;
+                }
+                catch (Exception)
+                {
+                    return "Error reading csv table";
+                }
+            }),
+            new RegexReplacement("CSV (comma) to C# Class", s =>
+            {
+                try
+                {
+                    var o = s.ReadCsvString(',', true);
+
+                    var dd = o.FitToCsharpClass("MyClass", null);
+
+                    return dd;
+                }
+                catch (Exception)
+                {
+                    return "Error reading csv table";
+                }
+            }),
+
+
             //sql inserts
             new RegexReplacement("CSV (tab) to SQL inserts", s =>
             {
