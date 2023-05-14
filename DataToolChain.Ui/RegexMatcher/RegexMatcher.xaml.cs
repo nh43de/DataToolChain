@@ -152,38 +152,63 @@ fox";
 
         public void UpdateOutput()
         {
-            var matchesInput = RegexMatchInputs.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-
-            var patternStringDictionary = new StringStartingPosDictionary();
-
             try
             {
                 var regexOptions = GetRegexOptions();
 
-                var dd = matchesInput.SelectMany(
-                    pattern =>
-                        Regex.Matches(StringInput, UseRegex ? pattern : Regex.Escape(pattern), regexOptions)
-                            .OfType<Match>()
-                            .Where(m => m.Success));
-
-                foreach (var m in dd)
-                {
-                    patternStringDictionary.Add(m.Index, _printGroups ? m.Groups[1].Value : m.Value);
-                }
+                var r = Match(RegexMatchInputs, regexOptions, StringInput, UseRegex, _printGroups, Unique);
 
                 if (Unique)
                 {
-                    StringOutput = string.Join("\r\n", patternStringDictionary.GetValues().Distinct());
+                    StringOutput = string.Join("\r\n", r);
                 }
                 else
                 {
-                    StringOutput = string.Join("\r\n", patternStringDictionary.GetValues());
+                    StringOutput = string.Join("\r\n", r);
                 }
             }
             catch (Exception)
             {
                 StringOutput = "Error in regex.";
                 return;
+            }
+        }
+
+        public static string[] Match(string regexMatchInputs, RegexOptions regexOptions, string stringInput, bool useRegex, bool printGroups, bool unique)
+        {
+            var matchesInput = regexMatchInputs.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+
+            var patternStringDictionary = new StringStartingPosDictionary();
+
+            try
+            {
+                var dd = matchesInput.SelectMany(
+                    pattern =>
+                        Regex.Matches(stringInput, useRegex ? pattern : Regex.Escape(pattern), regexOptions)
+                            .OfType<Match>()
+                            .Where(m => m.Success));
+
+                foreach (var m in dd)
+                {
+                    patternStringDictionary.Add(m.Index, printGroups ? m.Groups[1].Value : m.Value);
+                }
+
+                if (unique)
+                {
+                    var r = patternStringDictionary.GetValues().Distinct().ToArray();
+
+                    return r;
+                }
+                else
+                {
+                    var r = patternStringDictionary.GetValues().ToArray();
+
+                    return r;
+                }
+            }
+            catch (Exception)
+            {
+                return new []{ "Error in regex." };
             }
         }
 

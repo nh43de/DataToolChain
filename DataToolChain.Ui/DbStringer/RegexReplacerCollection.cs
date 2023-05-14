@@ -577,8 +577,28 @@ namespace DataToolChain.DbStringer
                 {
                     return "Error reading csv table";
                 }
-            })
+            }),
+
+            new RegexReplacement("Simple C# class map (map class properties from one obj to another)", s =>
+            {
+                try
+                {
+                    var options = RegexOptions.IgnoreCase;
+
+                    var matches = RegexMatcherViewModel.Match("public\\W+.*?\\W+(.*?)\\W+\\{.*\\r\\n", options, s, true, true, false);
+
+                    var dd = RegexReplacement.RegexReplace(new RegexReplacement.RegexReplacementStep(@"(.*)\r\n", @"$1 = p\.$1,\r\n", null), string.Join("\r\n", matches) + "\r\n");
+
+                    return dd;
+                }
+                catch (Exception)
+                {
+                    return "Error reading csv table";
+                }
+            }),
+
 
         };
     }
 }
+
