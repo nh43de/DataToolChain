@@ -598,6 +598,22 @@ namespace DataToolChain.DbStringer
             }),
 
 
+            new RegexReplacement("List C# public properties", s =>
+            {
+                try
+                {
+                    var options = RegexOptions.IgnoreCase;
+
+                    var matches = RegexMatcherViewModel.Match("public\\W+.*?\\W+(.*?)\\W+\\{.*\\r\\n", options, s, true, true, false);
+                    
+                    return matches.JoinStr("\r\n");
+                }
+                catch (Exception)
+                {
+                    return "Error reading csv table";
+                }
+            }),
+
         };
     }
 }
