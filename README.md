@@ -4,7 +4,7 @@ For people that deal with data. A collection of utility applications that use [D
 
 ## Installing Data Toolchain
 
-DataToolChain is built with WPF on .NET Core 3.1. You can download and run the latest binaries from the [Releases](https://github.com/nh43de/DataToolChain/releases) page.
+DataToolChain is built with WPF on .NET 7. You can download and run the latest binaries from the [Releases](https://github.com/nh43de/DataToolChain/releases) page. You may need to install the .NET 7 Runtimes available from Microsoft's website.
 
 
 ## Tools Included
@@ -114,10 +114,4 @@ A high performance streaming implementation of outputting a SQL query to a comma
 Experiment with JUST transforms for querying and transforming JSON data (similar to XSLT).
 
 More information here: https://github.com/WorkMaze/JUST.net
-
-## Upcoming Additions
-
-- Json to c# class
-- More
-
 
