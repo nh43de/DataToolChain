@@ -585,9 +585,9 @@ namespace DataToolChain.DbStringer
                 {
                     var options = RegexOptions.IgnoreCase;
 
-                    var matches = RegexMatcherViewModel.Match("public\\W+.*?\\W+(.*?)\\W+\\{.*\\r\\n", options, s, true, true, false);
+                    var matches = RegexMatcherViewModel.Match(@"public\W+.*?\W+(.*?)\W+\{.*[\r\n]+", options, s, true, true, false);
 
-                    var dd = RegexReplacement.RegexReplace(new RegexReplacement.RegexReplacementStep(@"(.*)\r\n", @"$1 = p\.$1,\r\n", null), string.Join("\r\n", matches) + "\r\n");
+                    var dd = RegexReplacement.RegexReplace(new RegexReplacement.RegexReplacementStep(@"(.*?)[\r\n]+", @"$1 = p\.$1,\r\n", null), string.Join("\r\n", matches) + "\r\n");
 
                     return dd;
                 }
@@ -604,7 +604,7 @@ namespace DataToolChain.DbStringer
                 {
                     var options = RegexOptions.IgnoreCase;
 
-                    var matches = RegexMatcherViewModel.Match("public\\W+.*?\\W+(.*?)\\W+\\{.*\\r\\n", options, s, true, true, false);
+                    var matches = RegexMatcherViewModel.Match(@"public\W+.*?\W+(.*?)\W+\{.*[\r\n]+", options, s, true, true, false);
                     
                     return matches.JoinStr("\r\n");
                 }
