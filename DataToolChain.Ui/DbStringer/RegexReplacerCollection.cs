@@ -9,6 +9,7 @@ using DataPowerTools.Extensions;
 using DataPowerTools.PowerTools;
 using DataToolChain.Ui.DbStringer;
 using DataToolChain.Ui.Extensions;
+using static DataToolChain.DbStringer.RegexReplacement;
 
 namespace DataToolChain.DbStringer
 {
@@ -180,7 +181,7 @@ namespace DataToolChain.DbStringer
                     Replacement = " "
                 }
             }),
-            new RegexReplacement("Sanitize Column Names", new[]
+            new RegexReplacement("Sanitize Column Names", new IRegexReplacementStep[]
             {
                 new RegexReplacement.RegexReplacementStep
                 {
@@ -194,7 +195,7 @@ namespace DataToolChain.DbStringer
                 },
                 new RegexReplacement.RegexReplacementStep
                 {
-                    Pattern = @"$",
+                    Pattern = @"\$",
                     Replacement = "Dollar"
                 },
                 new RegexReplacement.RegexReplacementStep
@@ -202,6 +203,11 @@ namespace DataToolChain.DbStringer
                     Pattern = @"%",
                     Replacement = "Pct"
                 },
+                new RegexReplacement.StringReplacementStep
+                {
+                    Pattern = "ID",
+                    Replacement = "Id"
+                }
             }),
             new RegexReplacement("Sanitize Quotes", new[]
             {

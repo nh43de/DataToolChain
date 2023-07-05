@@ -115,6 +115,33 @@ namespace DataToolChain.DbStringer
             }
         }
 
+        public class StringReplacementStep : IRegexReplacementStep
+        {
+            private readonly bool _matchCase;
+            public string Pattern { get; set; }
+            public string Replacement { get; set; }
+
+            public string TrimEndString { get; set; }
+            public string DisplayText => $"[{Pattern}] -> [{Replacement}]";
+
+            public StringReplacementStep(string pattern, string replacement, bool matchCase)
+            {
+                _matchCase = matchCase;
+                Pattern = pattern;
+                Replacement = replacement;
+            }
+
+            public StringReplacementStep()
+            {
+
+            }
+
+            public string Process(string input)
+            {
+                return input.Replace(Pattern, Replacement, _matchCase ? StringComparison.CurrentCulture : StringComparison.CurrentCultureIgnoreCase);
+            }
+        }
+
         public static string RegexReplace(RegexReplacement r, string text)
         {
             if (text == null)
