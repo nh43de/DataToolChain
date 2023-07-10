@@ -354,6 +354,8 @@ namespace DataToolChain
                 DataSource = ServerName
             };
 
+            a.TrustServerCertificate = true;
+
             if (string.IsNullOrEmpty(this.Username))
             {
                 a.IntegratedSecurity = true;
