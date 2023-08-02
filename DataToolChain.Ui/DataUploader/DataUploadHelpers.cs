@@ -32,7 +32,7 @@ namespace DataToolChain
                 progress.Report("Dropping Table");
                 Database.DropTable(sqlc, destinationTable);
             }
-
+            
             //generate create table sql
             progress.Report("Generating table SQL from file.");
             var tableSql = TableSqlUploadHelpers.GetTableSql(filePaths, destinationTable);

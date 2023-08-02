@@ -28,7 +28,7 @@ namespace DataToolChain.DbStringer
         }
     }
 
-    public class RegexReplacerCollection : List<SelectableRegexReplacement>
+    public partial class RegexReplacerCollection : List<SelectableRegexReplacement>
     {
         public string FailString { get; set; }
 
@@ -56,12 +56,12 @@ namespace DataToolChain.DbStringer
             new RegexReplacement("Vertical list to SQL literal string", @"^(.*?)\r?$", "'$1' + CHAR(13) + CHAR(10)", " + CHAR(13) + CHAR(10)"),
             new RegexReplacement("Vertical list to SQL UNIONS", new[]
             {
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"'",
                     Replacement = "''"
                 },
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"^(.*?)\r?$",
                     Replacement = "SELECT '$1' \r\nUNION",
@@ -70,32 +70,32 @@ namespace DataToolChain.DbStringer
             }),
             new RegexReplacement("Vertical list to SQL UNION ALL", new[]
             {
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"'",
                     Replacement = "''"
                 },
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"^(.*?)\r?$",
                     Replacement = "SELECT '$1' \r\nUNION ALL",
                     TrimEndString = "\r\nUNION ALL"
                 }
             }),
-            new RegexReplacement("Vertical list to Regex alternative match expression", new RegexReplacement.IRegexReplacementStep[]
+            new RegexReplacement("Vertical list to Regex alternative match expression", new IRegexReplacementStep[]
             {
-                new RegexReplacement.RegexReplacementStepFunc(Regex.Escape, "regex escape"),
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStepFunc(Regex.Escape, "regex escape"),
+                new RegexReplacementStep
                 {
                     Pattern = @"(.*?)(\\r\\n|\\r|\\n)",
                     Replacement = "$1|"
                 },
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"^",
                     Replacement = "\\("
                 },
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"$",
                     Replacement = "\\)"
@@ -105,17 +105,17 @@ namespace DataToolChain.DbStringer
             new RegexReplacement("Smart NULLIF", @"/ *(.*?) *,\r\n", @"/ NULLIF($1, 0),\r\n"),
             new RegexReplacement("Tabs to SQL Columns", new[]
             {
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = "^",
                     Replacement = "UNION SELECT '"
                 },
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = "\t",
                     Replacement = "', '"
                 },
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = "\r\n",
                     Replacement = "'\r\n"
@@ -139,7 +139,7 @@ namespace DataToolChain.DbStringer
             new RegexReplacement("Unescape regex", Regex.Unescape),
             new RegexReplacement("Unescape regex $ ", new[]
             {
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"\\\$",
                     Replacement = @"\$"
@@ -156,6 +156,8 @@ namespace DataToolChain.DbStringer
                 return s;
             }),
             new RegexReplacement("Trim", s => s.Split('\r').Select(x => x.Trim()).JoinStr("\r\n")),
+            new RegexReplacement("Trim and Remove Empty Lines", s => s.Split('\r').Select(x => x.Trim()).Where(p => string.IsNullOrEmpty(p) == false).JoinStr("\r\n")),
+            new RegexReplacement("Remove Empty Lines", s => NewLineRegex().Split(s).Where(p => string.IsNullOrWhiteSpace(p) == false).JoinStr("\r\n")),
             //new RegexReplacement("Distinct", s => Regex.Split(s, "\r\n?").Select(x => x.Trim()).Distinct().JoinStr("\r\n")),
             new RegexReplacement("Distinct", s => s.Split('\r').Select(x => x.Trim()).Distinct().OrderBy(x => x).JoinStr("\r\n")),
             new RegexReplacement("Group and Count", s => Regex.Split(s, "\r\n?")
@@ -164,7 +166,7 @@ namespace DataToolChain.DbStringer
                 .Select(p => new
                 {
                     Count = p.Count(),
-                    Key = p.Key
+                    p.Key
                 })
                 .OrderByDescending(p => p.Count)
                 .Select(p => p.Key + '\t' + p.Count)
@@ -175,7 +177,7 @@ namespace DataToolChain.DbStringer
             new RegexReplacement("Sort by Length Desc", s => Regex.Split(s, "\r\n?").OrderByDescending(x => x.Length).ThenBy(x => x).JoinStr("\r\n")),
             new RegexReplacement("Condense Whitespace", new[]
             {
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"[ \t\r\n]+",
                     Replacement = " "
@@ -183,27 +185,27 @@ namespace DataToolChain.DbStringer
             }),
             new RegexReplacement("Sanitize Column Names", new IRegexReplacementStep[]
             {
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"[ \\\)\(\[\]/-]",
                     Replacement = ""
                 },
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"#",
                     Replacement = "Num"
                 },
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"\$",
                     Replacement = "Dollar"
                 },
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"%",
                     Replacement = "Pct"
                 },
-                new RegexReplacement.StringReplacementStep
+                new StringReplacementStep
                 {
                     Pattern = "ID",
                     Replacement = "Id"
@@ -211,7 +213,7 @@ namespace DataToolChain.DbStringer
             }),
             new RegexReplacement("Sanitize Quotes", new[]
             {
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"['‘’“”]",
                     Replacement = "\""
@@ -219,17 +221,17 @@ namespace DataToolChain.DbStringer
             }),
             new RegexReplacement("Params to Tabs", new[]
             {
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"^\W*?'",
                     Replacement = ""
                 },
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"'\W*?$",
                     Replacement = ""
                 },
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"'\W*?,\W*?'",
                     Replacement = "\t"
@@ -238,17 +240,17 @@ namespace DataToolChain.DbStringer
             new RegexReplacement("Tabs to rows", "\t", "\r\n"),
             new RegexReplacement("Tabs to params", new[]
             {
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = "^",
                     Replacement = "'"
                 },
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = "\t",
                     Replacement = "', '"
                 },
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = "\r\n",
                     Replacement = "'\r\n"
@@ -256,7 +258,7 @@ namespace DataToolChain.DbStringer
             }),
             new RegexReplacement("SQL Columns to DECLARE statement", new[]
             {
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"^[ \t]*\[?((?<=\[)[^\[\]]+(?=\])|[a-z0-9]+)\]?[ \t]*\[?([^\[\]]+)\]?[ \t]*(\([0-9]+\))?.*?,\r\n",
                     Replacement = @"DECLARE @$1 $2$3;\r\n"
@@ -264,72 +266,72 @@ namespace DataToolChain.DbStringer
             }),
             new RegexReplacement("Generalize Regex - use ^^^ to enclose groups, and _________ to indicate a wildcard", new[]
             {
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"\\",
                     Replacement = @"\\\\"
                 },
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"\*",
                     Replacement = @"\\\*"
                 },
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"\[",
                     Replacement = @"\\["
                 },
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"\]",
                     Replacement = @"\\]"
                 },
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"\.",
                     Replacement = @"\\."
                 },
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"\[[a-z 0-9]+?\]",
                     Replacement = @"{7D12F4D5-9A13-4F2D-BEB7-5FF8C1A199E0}"
                 },
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"\(",
                     Replacement = @"\\("
                 },
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"\)",
                     Replacement = @"\\)"
                 },
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"[ \t]+",
                     Replacement = @"\[ \\t]*"
                 },
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"{7D12F4D5-9A13-4F2D-BEB7-5FF8C1A199E0}",
                     Replacement = @"\[[a-z 0-9]+?\]"
                 },
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"\r",
                     Replacement = @"\\r"
                 },
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"\n",
                     Replacement = @"\\n"
                 },
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"\^\^\^(.*?)\^\^\^",
                     Replacement = @"\($1\)"
                 },
-                new RegexReplacement.RegexReplacementStep
+                new RegexReplacementStep
                 {
                     Pattern = @"___",
                     Replacement = @".+"
@@ -593,7 +595,7 @@ namespace DataToolChain.DbStringer
 
                     var matches = RegexMatcherViewModel.Match(@"public\W+.*?\W+(.*?)\W+\{.*[\r\n]+", options, s, true, true, false);
 
-                    var dd = RegexReplacement.RegexReplace(new RegexReplacement.RegexReplacementStep(@"(.*?)[\r\n]+", @"$1 = p\.$1,\r\n", null), string.Join("\r\n", matches) + "\r\n");
+                    var dd = RegexReplace(new RegexReplacementStep(@"(.*?)[\r\n]+", @"$1 = p\.$1,\r\n", null), string.Join("\r\n", matches) + "\r\n");
 
                     return dd;
                 }
@@ -621,6 +623,9 @@ namespace DataToolChain.DbStringer
             }),
 
         };
+
+        [GeneratedRegex("\r\n?")]
+        private static partial Regex NewLineRegex();
     }
 }
 
