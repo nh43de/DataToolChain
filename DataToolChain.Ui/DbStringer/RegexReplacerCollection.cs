@@ -209,7 +209,8 @@ namespace DataToolChain.DbStringer
                 new StringReplacementStep
                 {
                     Pattern = "ID",
-                    Replacement = "Id"
+                    Replacement = "Id",
+                    CaseSensitive = true
                 }
             }),
             new RegexReplacement("Sanitize Quotes", new[]

@@ -117,16 +117,17 @@ namespace DataToolChain.DbStringer
 
         public class StringReplacementStep : IRegexReplacementStep
         {
-            private readonly bool _matchCase;
             public string Pattern { get; set; }
             public string Replacement { get; set; }
 
             public string TrimEndString { get; set; }
             public string DisplayText => $"[{Pattern}] -> [{Replacement}]";
 
+            public bool CaseSensitive { get; set; }
+
             public StringReplacementStep(string pattern, string replacement, bool matchCase)
             {
-                _matchCase = matchCase;
+                CaseSensitive = matchCase;
                 Pattern = pattern;
                 Replacement = replacement;
             }
@@ -138,7 +139,7 @@ namespace DataToolChain.DbStringer
 
             public string Process(string input)
             {
-                return input.Replace(Pattern, Replacement, _matchCase ? StringComparison.CurrentCulture : StringComparison.CurrentCultureIgnoreCase);
+                return input.Replace(Pattern, Replacement, CaseSensitive ? StringComparison.CurrentCulture : StringComparison.CurrentCultureIgnoreCase);
             }
         }
 
