@@ -6,13 +6,13 @@
         xmlns:local="clr-namespace:DataToolChain"
         xmlns:dbStringer="clr-namespace:DataToolChain.DbStringer"
         mc:Ignorable="d"
-        Title="Db Stringer" Height="680" Width="850"
+        Title="Db Stringer" Height="680" Width="950"
         d:DataContext="{d:DesignInstance Type=dbStringer:DbStringerViewModel, IsDesignTimeCreatable=True}"
         >
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="320"/>
+            <ColumnDefinition Width="220*"/>
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="480*"/>
         </Grid.ColumnDefinitions>
