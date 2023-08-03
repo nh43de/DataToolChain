@@ -9,42 +9,62 @@
         Title="Db Stringer" Height="680" Width="850"
         d:DataContext="{d:DesignInstance Type=dbStringer:DbStringerViewModel, IsDesignTimeCreatable=True}"
         >
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="300"/>
-            <RowDefinition Height="410*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid Background="Beige">
-            <ScrollViewer CanContentScroll="True" >
-                <ListView ItemsSource="{Binding Path=RegexReplacers}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <RadioButton Content="{Binding Path=DisplayText}" Checked="SelectedRegexChanged" GroupName="regexes" IsChecked="{Binding Path=IsChecked}"></RadioButton>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </ScrollViewer>
-        </Grid>
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="395*"/>
-                <ColumnDefinition Width="5"/>
-                <ColumnDefinition Width="424*"/>
-            </Grid.ColumnDefinitions>
-            <TextBox AcceptsReturn="True" AcceptsTab="True" TextWrapping="NoWrap" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Text="{Binding Path=InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <GridSplitter Grid.Column="1" Background="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></GridSplitter>
-            <TextBox Grid.Column="2" TextWrapping="NoWrap" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Text="{Binding Path=OutputText, Mode=OneWay}"></TextBox>
-        </Grid>
 
-        <Grid Grid.Row="2">
-            <StackPanel Orientation="Horizontal">
-                <Button Height="32px" Width="60px" Margin="8px" HorizontalAlignment="Left" Click="Apply_Click">Apply</Button>
-                <Button Height="32px" Width="60px" Margin="8px" HorizontalAlignment="Left" Click="Copy_Click">Copy</Button>
-            </StackPanel>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="320"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="480*"/>
+        </Grid.ColumnDefinitions>
+
+        <ScrollViewer CanContentScroll="True" Background="Transparent">
+            <ListView ItemsSource="{Binding Path=RegexReplacers}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <RadioButton Content="{Binding Path=DisplayText}" Checked="SelectedRegexChanged" GroupName="regexes" IsChecked="{Binding Path=IsChecked}"></RadioButton>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Template>
+                    <ControlTemplate>
+                        <!-- Empty template to allow ScrollViewer to capture mouse scroll -->
+                        <ItemsPresenter />
+                    </ControlTemplate>
+                </ListView.Template>
+            </ListView>
+        </ScrollViewer>
+
+        <GridSplitter Grid.Column="1" Background="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></GridSplitter>
+
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="410*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="395*"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="424*"/>
+                </Grid.RowDefinitions>
+                <TextBox AcceptsReturn="True" AcceptsTab="True" TextWrapping="NoWrap" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Text="{Binding Path=InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <GridSplitter Grid.Row="1" Background="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></GridSplitter>
+                <TextBox Grid.Row="2" TextWrapping="NoWrap" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Text="{Binding Path=OutputText, Mode=OneWay}"></TextBox>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <StackPanel Orientation="Horizontal">
+                    <Button Height="32px" Width="60px" Margin="8px" HorizontalAlignment="Left" Click="Apply_Click">Apply</Button>
+                    <Button Height="32px" Width="60px" Margin="8px" HorizontalAlignment="Left" Click="Copy_Click">Copy</Button>
+                </StackPanel>
+            </Grid>
+
         </Grid>
 
     </Grid>
+
+
+
 
 
 </Window>

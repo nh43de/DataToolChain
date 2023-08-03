@@ -8,7 +8,11 @@ namespace DataToolChain.DbStringer
 {
     public class DbStringerViewModel : INotifyPropertyChanged
     {
-        private string _inputText;
+        private string _inputText = @"List input 1
+List input 2
+List input 3
+List input 4";
+
         //public const string DefaultFileName = "dbstringerconfig.json";
 
 
@@ -40,6 +44,11 @@ namespace DataToolChain.DbStringer
         public DbStringerViewModel()
         {
             RegexReplacers = RegexReplacerCollection.DefaultReplacerCollection;
+
+            RegexReplacers[2].IsChecked = true;
+
+            UpdateOutputText();
+
 
             //if (!File.Exists(DefaultFileName))
             //{
