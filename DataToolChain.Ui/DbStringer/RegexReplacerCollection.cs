@@ -587,7 +587,7 @@ namespace DataToolChain.DbStringer
                 }
             }),
 
-            new RegexReplacement("Simple C# class map (map class properties from one obj to another)", s =>
+            new RegexReplacement("C# class to simple map (map class properties from one obj to another)", s =>
             {
                 try
                 {
@@ -606,14 +606,14 @@ namespace DataToolChain.DbStringer
             }),
 
 
-            new RegexReplacement("List C# public properties", s =>
+            new RegexReplacement("C# class - list public properties", s =>
             {
                 try
                 {
                     var options = RegexOptions.IgnoreCase;
 
                     var matches = RegexMatcherViewModel.Match(@"public\W+.*?\W+(.*?)\W+\{.*[\r\n]+", options, s, true, true, false);
-                    
+
                     return matches.JoinStr("\r\n");
                 }
                 catch (Exception)
@@ -621,7 +621,22 @@ namespace DataToolChain.DbStringer
                     return "Error reading csv table";
                 }
             }),
+            new RegexReplacement("List to C# auto-properties", s => NewLineRegex().Split(s).Where(p => string.IsNullOrWhiteSpace(p) == false).Select(p => $"public cs_type {p} {{ get; set; }}").JoinStr("\r\n")),
+            new RegexReplacement("C# class - list public properties", s =>
+            {
+                try
+                {
+                    var options = RegexOptions.IgnoreCase;
 
+                    var matches = RegexMatcherViewModel.Match(@"public\W+.*?\W+(.*?)\W+\{.*[\r\n]+", options, s, true, true, false);
+
+                    return matches.JoinStr("\r\n");
+                }
+                catch (Exception)
+                {
+                    return "Error reading csv table";
+                }
+            }),
         };
 
         [GeneratedRegex("\r\n?")]
