@@ -2,6 +2,7 @@ using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using DataPowerTools.Connectivity.Json;
@@ -636,6 +637,39 @@ namespace DataToolChain.DbStringer
                 catch (Exception)
                 {
                     return "Error reading csv table";
+                }
+            }),
+            new RegexReplacement("Enumerate files in a directory", s =>
+            {
+                try
+                {
+                    if (string.IsNullOrWhiteSpace(s) || Path.Exists(s) == false)
+                        return null;
+
+                    var files = Directory.EnumerateFiles(s).Select(p => Path.GetFileName(p)).JoinStr("\r\n");
+
+                    return files;
+                }
+                catch (Exception ex)
+                {
+                    return "Error: " + ex.Message;
+                }
+            }),
+
+            new RegexReplacement("Enumerate files in a directory (without extensions)", s =>
+            {
+                try
+                {
+                    if (string.IsNullOrWhiteSpace(s) || Path.Exists(s) == false)
+                        return null;
+
+                    var files = Directory.EnumerateFiles(s).Select(p => Path.GetFileNameWithoutExtension(p)).JoinStr("\r\n");
+
+                    return files;
+                }
+                catch (Exception ex)
+                {
+                    return "Error: " + ex.Message;
                 }
             }),
         };
