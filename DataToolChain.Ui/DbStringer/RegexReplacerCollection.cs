@@ -53,6 +53,7 @@ namespace DataToolChain.DbStringer
             new RegexReplacement("Vertical list to comma-separated list", @"\r\n", ","),
             new RegexReplacement("Comma-separated list to vertical list", @",\W*", "\r\n"),
             new RegexReplacement("Tabbed list to comma-separated list", "\t", ","),
+            new RegexReplacement("Tabbed list to rows", "\t", "\r\n"),
             new RegexReplacement("Vertical list to SQL literal string", @"^(.*?)\r?$", "'$1' + CHAR(13) + CHAR(10)", " + CHAR(13) + CHAR(10)"),
             new RegexReplacement("Vertical list to SQL UNIONS", new[]
             {
@@ -237,7 +238,6 @@ namespace DataToolChain.DbStringer
                     Replacement = "\t"
                 }
             }),
-            new RegexReplacement("Tabs to rows", "\t", "\r\n"),
             new RegexReplacement("Tabs to params", new[]
             {
                 new RegexReplacementStep
