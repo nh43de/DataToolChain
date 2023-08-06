@@ -84,6 +84,7 @@ namespace DataToolChain.DbStringer
                     TrimEndString = "\r\nUNION ALL"
                 }
             }),
+            new RegexReplacement("List to C# auto-properties", s => NewLineRegex().Split(s).Where(p => string.IsNullOrWhiteSpace(p) == false).Select(p => $"public cs_type {SanitizeColumn(p)} {{ get; set; }}").JoinStr("\r\n")),
             new RegexReplacement("Vertical list to Regex alternative match expression", new IRegexReplacementStep[]
             {
                 new RegexReplacementStepFunc(Regex.Escape, "regex escape"),
@@ -185,35 +186,7 @@ namespace DataToolChain.DbStringer
                     Replacement = " "
                 }
             }),
-            new RegexReplacement("Sanitize Column Names", new IRegexReplacementStep[]
-            {
-                new RegexReplacementStep
-                {
-                    Pattern = @"[ \\\)\(\[\]/-]",
-                    Replacement = ""
-                },
-                new RegexReplacementStep
-                {
-                    Pattern = @"#",
-                    Replacement = "Num"
-                },
-                new RegexReplacementStep
-                {
-                    Pattern = @"\$",
-                    Replacement = "Dollar"
-                },
-                new RegexReplacementStep
-                {
-                    Pattern = @"%",
-                    Replacement = "Pct"
-                },
-                new StringReplacementStep
-                {
-                    Pattern = "ID",
-                    Replacement = "Id",
-                    CaseSensitive = true
-                }
-            }),
+            new RegexReplacement("Sanitize Column Names", SanitizeColumnReplace),
             new RegexReplacement("Sanitize Quotes", new[]
             {
                 new RegexReplacementStep
@@ -623,7 +596,6 @@ namespace DataToolChain.DbStringer
                     return "Error reading csv table";
                 }
             }),
-            new RegexReplacement("List to C# auto-properties", s => NewLineRegex().Split(s).Where(p => string.IsNullOrWhiteSpace(p) == false).Select(p => $"public cs_type {p} {{ get; set; }}").JoinStr("\r\n")),
             new RegexReplacement("C# class - list public properties", s =>
             {
                 try
@@ -671,8 +643,45 @@ namespace DataToolChain.DbStringer
                 {
                     return "Error: " + ex.Message;
                 }
-            }),
+            })
         };
+
+        private static IRegexReplacementStep[] SanitizeColumnReplace { get; } = new IRegexReplacementStep[]
+        {
+            new RegexReplacementStep
+            {
+                Pattern = @"[ \\\)\(\[\]/-]",
+                Replacement = ""
+            },
+            new RegexReplacementStep
+            {
+                Pattern = @"#",
+                Replacement = "Num"
+            },
+            new RegexReplacementStep
+            {
+                Pattern = @"\$",
+                Replacement = "Dollar"
+            },
+            new RegexReplacementStep
+            {
+                Pattern = @"%",
+                Replacement = "Pct"
+            },
+            new StringReplacementStep
+            {
+                Pattern = "ID",
+                Replacement = "Id",
+                CaseSensitive = true
+            }
+        };
+
+        public static string SanitizeColumn(string s)
+        {
+            var r = RegexReplacement.RegexReplace(SanitizeColumnReplace, s);
+
+            return r;
+        }
 
         [GeneratedRegex("\r\n?")]
         private static partial Regex NewLineRegex();
