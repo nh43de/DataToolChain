@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using DataPowerTools.Extensions;
-using DataToolChain.Ui.Extensions;
 
 namespace DataToolChain.DbStringer
 {
@@ -170,6 +169,21 @@ namespace DataToolChain.DbStringer
 
             return rtn;
         }
+
+        public static string RegexReplace(IRegexReplacementStep[] r, string text)
+        {
+            if (string.IsNullOrEmpty(text))
+                return string.Empty;
+
+            foreach (var regexReplacementStep in r)
+            {
+                text = regexReplacementStep.Process(text);
+            }
+
+            return text;
+        }
+
+
 
         public string DisplayText => Name + ": " + RegexReplacementSteps?.Select((r, i) => r.DisplayText).JoinStr("\r\n");
     }
