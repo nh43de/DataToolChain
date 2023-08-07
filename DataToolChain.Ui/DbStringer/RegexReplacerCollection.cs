@@ -139,6 +139,12 @@ namespace DataToolChain.DbStringer
                 }
             }),
             new RegexReplacement("Escape Regex", Regex.Escape),
+            new RegexReplacement("Escape Regex (no $)", s =>
+            {
+                var r = Regex.Escape(s).Replace(@"\$", "$");
+
+                return r;
+            }),
             new RegexReplacement("Unescape regex", Regex.Unescape),
             new RegexReplacement("Unescape regex $ ", new[]
             {
