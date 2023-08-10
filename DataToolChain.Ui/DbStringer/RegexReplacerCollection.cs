@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using DataPowerTools.Connectivity.Json;
 using DataPowerTools.Extensions;
+using DataPowerTools.FileSystem;
 using DataPowerTools.PowerTools;
 using DataToolChain.Ui.DbStringer;
 using DataToolChain.Ui.Extensions;
@@ -636,6 +637,68 @@ namespace DataToolChain.DbStringer
                         return null;
 
                     var files = Directory.EnumerateFiles(s).Select(p => Path.GetFileNameWithoutExtension(p)).JoinStr("\r\n");
+
+                    return files;
+                }
+                catch (Exception ex)
+                {
+                    return "Error: " + ex.Message;
+                }
+            }),
+            new RegexReplacement("Enumerate files in a directory (recursive)", s =>
+            {
+                try
+                {
+                    if (string.IsNullOrWhiteSpace(s) || Path.Exists(s) == false)
+                        return null;
+
+                    var strings = new List<string>();
+
+                    DirectoryScanner.ScanRecursive(s, s1 => strings.Add(Path.GetFileName(s1)));
+
+                    var files = strings.JoinStr("\r\n");
+
+                    return files;
+                }
+                catch (Exception ex)
+                {
+                    return "Error: " + ex.Message;
+                }
+            }),
+
+            new RegexReplacement("Enumerate files in a directory (recursive) (without extensions) ", s =>
+            {
+                try
+                {
+                    if (string.IsNullOrWhiteSpace(s) || Path.Exists(s) == false)
+                        return null;
+
+                    var strings = new List<string>();
+
+                    DirectoryScanner.ScanRecursive(s, s1 => strings.Add(Path.GetFileNameWithoutExtension(s1)));
+
+                    var files = strings.JoinStr("\r\n");
+
+                    return files;
+                }
+                catch (Exception ex)
+                {
+                    return "Error: " + ex.Message;
+                }
+            }),
+
+            new RegexReplacement("Enumerate files in a directory (recursive) (full path) ", s =>
+            {
+                try
+                {
+                    if (string.IsNullOrWhiteSpace(s) || Path.Exists(s) == false)
+                        return null;
+
+                    var strings = new List<string>();
+
+                    DirectoryScanner.ScanRecursive(s, s1 => strings.Add(s1));
+
+                    var files = strings.JoinStr("\r\n");
 
                     return files;
                 }
