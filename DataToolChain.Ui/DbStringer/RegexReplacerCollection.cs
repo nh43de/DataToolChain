@@ -140,6 +140,12 @@ namespace DataToolChain.DbStringer
                 }
             }),
             new RegexReplacement("Escape Regex", Regex.Escape),
+            new RegexReplacement("Escape Regex (no $)", s =>
+            {
+                var r = Regex.Escape(s).Replace(@"\$", "$");
+
+                return r;
+            }),
             new RegexReplacement("Unescape regex", Regex.Unescape),
             new RegexReplacement("Unescape regex $ ", new[]
             {
@@ -563,7 +569,7 @@ namespace DataToolChain.DbStringer
                 }
             }),
 
-            new RegexReplacement("C# class to simple map (map class properties from one obj to another)", s =>
+            new RegexReplacement("C# class to simple map (new)", s =>
             {
                 try
                 {
@@ -572,6 +578,24 @@ namespace DataToolChain.DbStringer
                     var matches = RegexMatcherViewModel.Match(@"public\W+.*?\W+(.*?)\W+\{.*[\r\n]+", options, s, true, true, false);
 
                     var dd = RegexReplace(new RegexReplacementStep(@"(.*?)[\r\n]+", @"$1 = p\.$1,\r\n", null), string.Join("\r\n", matches) + "\r\n");
+
+                    return dd;
+                }
+                catch (Exception)
+                {
+                    return "Error reading csv table";
+                }
+            }),
+
+            new RegexReplacement("C# class to simple map (map class properties from one obj to another)", s =>
+            {
+                try
+                {
+                    var options = RegexOptions.IgnoreCase;
+
+                    var matches = RegexMatcherViewModel.Match(@"public\W+.*?\W+(.*?)\W+\{.*[\r\n]+", options, s, true, true, false);
+
+                    var dd = RegexReplace(new RegexReplacementStep(@"(.*?)[\r\n]+", @"a.$1 = b\.$1;\r\n", null), string.Join("\r\n", matches) + "\r\n");
 
                     return dd;
                 }
