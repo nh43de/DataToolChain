@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Data;
+using System.Windows.Input;
 
 namespace DataToolChain.DbStringer
 {
@@ -42,8 +43,29 @@ List input 4";
 
         public CollectionView RegexReplacers { get; set; }
 
+        public ICommand RadioCheckedCommand { get; } 
+        
+        // Command handler
+        private void OnRadioChecked(object parameter)
+        {
+            if (parameter is SelectableRegexReplacement selectedReplacer)
+            {
+                // Handle the selection change, update the IsChecked property, and apply filtering as needed.
+                foreach (SelectableRegexReplacement replacer in RegexReplacers.SourceCollection)
+                {
+                    replacer.IsChecked = replacer == selectedReplacer;
+                }
+
+                RegexReplacers.Refresh(); // Refresh the CollectionView to apply filtering.
+
+                UpdateOutputText();
+            }
+        }
+
         public DbStringerViewModel()
         {
+            RadioCheckedCommand = new RelayCommand(OnRadioChecked);
+
             var collection = RegexReplacerCollection.DefaultReplacerCollection;
             collection[2].IsChecked = true;
 
@@ -82,7 +104,7 @@ List input 4";
             //}
 
         }
-        
+
         public string FilterText { get; set; }
 
         public void UpdateFilterText(string input)
@@ -114,4 +136,6 @@ List input 4";
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
+
 }
+

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Reflection.Metadata;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace DataToolChain.DbStringer
@@ -34,10 +36,22 @@ namespace DataToolChain.DbStringer
             _viewModel.UpdateFilterText(txtFilter.Text);
         }
 
-        private void SelectedRegexChanged(object sender, RoutedEventArgs e)
-        {
-            _viewModel.UpdateOutputText();
-        }
+        //private void SelectedRegexChanged(object parameter, RoutedEventArgs e)
+        //{
+        //    //var dd = (RadioButton)parameter;
+            
+        //    if (parameter is SelectableRegexReplacement selectedReplacer)
+        //    {
+        //        // Handle the selection change, update the IsChecked property, and apply filtering as needed.
+        //        foreach (SelectableRegexReplacement replacer in _viewModel.RegexReplacers.SourceCollection)
+        //        {
+        //            replacer.IsChecked = replacer == selectedReplacer;
+        //        }
+        //        //YourCollectionView.Refresh(); // Refresh the CollectionView to apply filtering.
+        //    }
+
+        //    _viewModel.UpdateOutputText();
+        //}
 
         private void Apply_Click(object sender, RoutedEventArgs e)
         {

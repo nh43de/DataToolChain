@@ -36,7 +36,12 @@
                 <ListView ItemsSource="{Binding Path=RegexReplacers}" Name="RegexReplacersListView">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <RadioButton Content="{Binding Path=DisplayText}" Checked="SelectedRegexChanged" GroupName="regexes" IsChecked="{Binding Path=IsChecked}"></RadioButton>
+                            <RadioButton Content="{Binding Path=DisplayText}" 
+                                         GroupName="regexes" 
+                                         IsChecked="{Binding Path=IsChecked}"
+                                         Command="{Binding Path=DataContext.RadioCheckedCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"
+                                         CommandParameter="{Binding}"
+                                         ></RadioButton>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                     <ListView.Template>
