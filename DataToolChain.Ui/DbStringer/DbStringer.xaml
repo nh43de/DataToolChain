@@ -17,21 +17,36 @@
             <ColumnDefinition Width="480*"/>
         </Grid.ColumnDefinitions>
 
-        <ScrollViewer CanContentScroll="True" Background="Transparent">
-            <ListView ItemsSource="{Binding Path=RegexReplacers}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <RadioButton Content="{Binding Path=DisplayText}" Checked="SelectedRegexChanged" GroupName="regexes" IsChecked="{Binding Path=IsChecked}"></RadioButton>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-                <ListView.Template>
-                    <ControlTemplate>
-                        <!-- Empty template to allow ScrollViewer to capture mouse scroll -->
-                        <ItemsPresenter />
-                    </ControlTemplate>
-                </ListView.Template>
-            </ListView>
-        </ScrollViewer>
+        <StackPanel Orientation="Vertical">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Margin="5" Name="txtFilter" Height="34" Padding="8" TextChanged="txtFilter_TextChanged" />
+                <Button Grid.Column="1" Margin="0,5,5,5" Width="32" Background="White" BorderThickness="0" FontFamily="Arial" FontSize="14">X</Button>
+            </Grid> 
+
+
+            <ScrollViewer CanContentScroll="True" Background="Transparent">
+                <ListView ItemsSource="{Binding Path=RegexReplacers}" Name="RegexReplacersListView">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <RadioButton Content="{Binding Path=DisplayText}" Checked="SelectedRegexChanged" GroupName="regexes" IsChecked="{Binding Path=IsChecked}"></RadioButton>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.Template>
+                        <ControlTemplate>
+                            <!-- Empty template to allow ScrollViewer to capture mouse scroll -->
+                            <ItemsPresenter />
+                        </ControlTemplate>
+                    </ListView.Template>
+                </ListView>
+            </ScrollViewer>
+
+        </StackPanel>
+
 
         <GridSplitter Grid.Column="1" Background="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></GridSplitter>
 

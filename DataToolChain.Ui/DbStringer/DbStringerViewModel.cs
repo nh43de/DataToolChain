@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows.Data;
 
 namespace DataToolChain.DbStringer
 {
@@ -37,15 +38,17 @@ List input 4";
 
         public string OutputText { get; private set; }
 
-        public RegexReplacement SelectedRegexReplacement => RegexReplacers?.FirstOrDefault(p => p.IsChecked)?.RegexReplacement;
+        public RegexReplacement SelectedRegexReplacement => RegexReplacers?.SourceCollection.Cast<SelectableRegexReplacement>().FirstOrDefault(p => p.IsChecked)?.RegexReplacement;
 
-        public RegexReplacerCollection RegexReplacers { get; set; }
+        public CollectionView RegexReplacers { get; set; }
 
         public DbStringerViewModel()
         {
-            RegexReplacers = RegexReplacerCollection.DefaultReplacerCollection;
+            var collection = RegexReplacerCollection.DefaultReplacerCollection;
+            collection[2].IsChecked = true;
 
-            RegexReplacers[2].IsChecked = true;
+            RegexReplacers = (CollectionView)CollectionViewSource.GetDefaultView(collection);
+            RegexReplacers.Filter = RegexReplacerFilter;
 
             UpdateOutputText();
 
@@ -77,15 +80,25 @@ List input 4";
 
             //    }
             //}
+
+        }
+        
+        public string FilterText { get; set; }
+
+        bool RegexReplacerFilter(object item)
+        {
+            if (string.IsNullOrEmpty(FilterText))
+                return true;
+            else
+            {
+                return item is SelectableRegexReplacement dd && dd.DisplayText.Contains(FilterText, StringComparison.OrdinalIgnoreCase);
+            }
         }
 
         public void SaveChanges()
         {
             //File.WriteAllText(DefaultFileName, RegexReplacers.ToJson(true));
         }
-
-
-
 
 
         public event PropertyChangedEventHandler PropertyChanged;
