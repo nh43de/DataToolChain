@@ -114,18 +114,17 @@ namespace DataToolChain.DbStringer
             }
         }
 
-
         public class ReplacementStep : IRegexReplacementStep
         {
             private readonly Func<string, string> _processFunc;
 
-            public string Pattern => null;
+            public string Pattern => "input";
 
-            public string Replacement => null;
+            public string Replacement {get; set; }
 
             public string TrimEndString => null;
 
-            public string DisplayText { get; private set; }
+            public string DisplayText => $"[{Pattern}] -> [{Replacement}]";
 
             public string Process(string input)
             {
@@ -134,12 +133,10 @@ namespace DataToolChain.DbStringer
 
             public ReplacementStep(string displayText, Func<string, string> processFunc)
             {
-                DisplayText = displayText;
+                Replacement = displayText;
                 _processFunc = processFunc;
-
             }
         }
-
 
         public class StringReplacementStep : IRegexReplacementStep
         {

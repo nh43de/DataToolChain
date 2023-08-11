@@ -51,6 +51,7 @@ namespace DataToolChain.DbStringer
 
         private void ButtonClear_Click(object sender, RoutedEventArgs e)
         {
+            txtFilter.Text = null;
             _viewModel.UpdateFilterText(null);
         }
     }
