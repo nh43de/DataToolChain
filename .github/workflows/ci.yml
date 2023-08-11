@@ -25,7 +25,7 @@ jobs:
     env:
       Solution_Path: DataToolChain.sln
       Wpf_Project_Path: DataToolChain.Ui\DataToolChain.Ui.csproj
-      Output_Directory: DataToolChain.Ui\bin\Debug\netcoreapp3.1
+      Output_Directory: DataToolChain.Ui\bin\Debug\net7.0-windows
       
 
     steps:
