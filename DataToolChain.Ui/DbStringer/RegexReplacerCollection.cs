@@ -328,7 +328,7 @@ namespace DataToolChain.DbStringer
                     return "Error in Json.";
                 }
             }),
-            new RegexReplacement("UnPivot table CSV (tab)", s =>
+            new RegexReplacement("UnPivot CSV table (tab)", s =>
             {
                 try
                 {
@@ -343,7 +343,7 @@ namespace DataToolChain.DbStringer
                     return "Error reading csv table";
                 }
             }),
-            new RegexReplacement("UnPivot table CSV (comma)", s =>
+            new RegexReplacement("UnPivot CSV table (comma)", s =>
             {
                 try
                 {
@@ -358,7 +358,6 @@ namespace DataToolChain.DbStringer
                     return "Error reading csv table";
                 }
             }),
-
 
             new RegexReplacement("CSV (tab) to Create Table SQL", s =>
             {
@@ -530,7 +529,7 @@ namespace DataToolChain.DbStringer
                 }
                 catch (Exception)
                 {
-                    return "Error reading csv table";
+                    return "Error parsing json";
                 }
             }),
 
@@ -544,7 +543,7 @@ namespace DataToolChain.DbStringer
                 }
                 catch (Exception)
                 {
-                    return "Error reading csv table";
+                    return "Error parsing json";
                 }
             }),
 
@@ -558,7 +557,7 @@ namespace DataToolChain.DbStringer
                 }
                 catch (Exception)
                 {
-                    return "Error reading csv table";
+                    return "Error parsing json array";
                 }
             }),
 
@@ -568,15 +567,15 @@ namespace DataToolChain.DbStringer
                 {
                     var options = RegexOptions.IgnoreCase;
 
-                    var matches = RegexMatcherViewModel.Match(@"public\W+.*?\W+(.*?)\W+\{.*[\r\n]+", options, s, true, true, false);
+                    var matches = RegexMatcherViewModel.Match(@"public\W+.*?\W+(.*?)\W+\{.*[\r\n]+", options, s+"\r\n", true, true, false);
 
                     var dd = RegexReplace(new RegexReplacementStep(@"(.*?)[\r\n]+", @"$1 = p\.$1,\r\n", null), string.Join("\r\n", matches) + "\r\n");
 
                     return dd;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    return "Error reading csv table";
+                    return "Error parsing class " +  ex.Message;
                 }
             }),
 
@@ -586,18 +585,17 @@ namespace DataToolChain.DbStringer
                 {
                     var options = RegexOptions.IgnoreCase;
 
-                    var matches = RegexMatcherViewModel.Match(@"public\W+.*?\W+(.*?)\W+\{.*[\r\n]+", options, s, true, true, false);
+                    var matches = RegexMatcherViewModel.Match(@"public\W+.*?\W+(.*?)\W+\{.*[\r\n]+", options, s+"\r\n", true, true, false);
 
                     var dd = RegexReplace(new RegexReplacementStep(@"(.*?)[\r\n]+", @"a.$1 = b\.$1;\r\n", null), string.Join("\r\n", matches) + "\r\n");
 
                     return dd;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    return "Error reading csv table";
+                    return "Error parsing class " +  ex.Message;
                 }
             }),
-
 
             new RegexReplacement("C# class - list public properties", s =>
             {
@@ -605,30 +603,16 @@ namespace DataToolChain.DbStringer
                 {
                     var options = RegexOptions.IgnoreCase;
 
-                    var matches = RegexMatcherViewModel.Match(@"public\W+.*?\W+(.*?)\W+\{.*[\r\n]+", options, s, true, true, false);
+                    var matches = RegexMatcherViewModel.Match(@"public\W+.*?\W+(.*?)\W+\{.*[\r\n]+", options, s+"\r\n", true, true, false);
 
                     return matches.JoinStr("\r\n");
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    return "Error reading csv table";
+                    return "Error parsing class " +  ex.Message;
                 }
             }),
-            new RegexReplacement("C# class - list public properties", s =>
-            {
-                try
-                {
-                    var options = RegexOptions.IgnoreCase;
 
-                    var matches = RegexMatcherViewModel.Match(@"public\W+.*?\W+(.*?)\W+\{.*[\r\n]+", options, s, true, true, false);
-
-                    return matches.JoinStr("\r\n");
-                }
-                catch (Exception)
-                {
-                    return "Error reading csv table";
-                }
-            }),
             new RegexReplacement("Enumerate files in a directory", s =>
             {
                 try
