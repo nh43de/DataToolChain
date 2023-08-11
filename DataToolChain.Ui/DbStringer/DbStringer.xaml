@@ -17,7 +17,11 @@
             <ColumnDefinition Width="480*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Vertical">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
 
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -26,10 +30,9 @@
                 </Grid.ColumnDefinitions>
                 <TextBox Margin="5" Name="txtFilter" Height="34" Padding="8" TextChanged="txtFilter_TextChanged" />
                 <Button Click="ButtonClear_Click" Grid.Column="1" Margin="0,5,5,5" Width="32" Background="White" BorderThickness="0" FontFamily="Arial" FontSize="14">X</Button>
-            </Grid> 
+            </Grid>
 
-
-            <ScrollViewer CanContentScroll="True" Background="Transparent">
+            <ScrollViewer Grid.Row="1" CanContentScroll="True" Background="Transparent">
                 <ListView ItemsSource="{Binding Path=RegexReplacers}" Name="RegexReplacersListView">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -44,8 +47,9 @@
                     </ListView.Template>
                 </ListView>
             </ScrollViewer>
+        </Grid>
 
-        </StackPanel>
+
 
 
         <GridSplitter Grid.Column="1" Background="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></GridSplitter>
