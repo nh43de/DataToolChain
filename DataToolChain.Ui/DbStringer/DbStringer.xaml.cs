@@ -31,8 +31,7 @@ namespace DataToolChain.DbStringer
 
         private void txtFilter_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            _viewModel.FilterText  = txtFilter.Text;
-            _viewModel.RegexReplacers.Refresh();
+            _viewModel.UpdateFilterText(txtFilter.Text);
         }
 
         private void SelectedRegexChanged(object sender, RoutedEventArgs e)
@@ -48,6 +47,11 @@ namespace DataToolChain.DbStringer
         private void Copy_Click(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(_viewModel.InputText);
+        }
+
+        private void ButtonClear_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.UpdateFilterText(null);
         }
     }
 }

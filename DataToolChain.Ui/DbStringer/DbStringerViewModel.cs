@@ -85,6 +85,12 @@ List input 4";
         
         public string FilterText { get; set; }
 
+        public void UpdateFilterText(string input)
+        {
+            FilterText = input;
+            RegexReplacers.Refresh();
+        }
+
         bool RegexReplacerFilter(object item)
         {
             if (string.IsNullOrEmpty(FilterText))
