@@ -114,6 +114,33 @@ namespace DataToolChain.DbStringer
             }
         }
 
+
+        public class ReplacementStep : IRegexReplacementStep
+        {
+            private readonly Func<string, string> _processFunc;
+
+            public string Pattern => null;
+
+            public string Replacement => null;
+
+            public string TrimEndString => null;
+
+            public string DisplayText { get; private set; }
+
+            public string Process(string input)
+            {
+                return _processFunc(input);
+            }
+
+            public ReplacementStep(string displayText, Func<string, string> processFunc)
+            {
+                DisplayText = displayText;
+                _processFunc = processFunc;
+
+            }
+        }
+
+
         public class StringReplacementStep : IRegexReplacementStep
         {
             public string Pattern { get; set; }
