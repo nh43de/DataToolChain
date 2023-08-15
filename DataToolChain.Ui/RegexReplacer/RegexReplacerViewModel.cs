@@ -11,6 +11,9 @@ namespace DataToolChain.RegexMaker
     public class RegexReplacerViewModel : INotifyPropertyChanged
     {
         private string _stringOutput;
+
+        //        private string _stringInput = "Apple\t10\tRed\r\nPear\t5\tGreen\r\nOrange\t15\tOrange";
+
         private string _stringInput = @"CREATE TABLE [dbo].[Generics](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[Suffix] [nvarchar](255) NULL,
@@ -85,13 +88,24 @@ SMALLINT
 DATETIME
 FLOAT
 $1\t$2\t$3\r\n";
-        private bool _useRegex;
+
+        private bool _useRegex = false;
         private bool _isCaseSensitive = false;
         private bool _eachLine = false;
+        private bool _magicMode = false;
         private bool _multiline;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        
+        public bool MagicMode
+        {
+            get { return _magicMode; }
+            set
+            {
+                _magicMode = value;
+                UseRegex = true;
+                UpdateOutput();
+            }
+        }
 
         public bool EachLine
         {
@@ -102,6 +116,7 @@ $1\t$2\t$3\r\n";
                 UpdateOutput();
             }
         }
+
         public bool IsCaseSensitive
         {
             get { return _isCaseSensitive; }
@@ -118,6 +133,7 @@ $1\t$2\t$3\r\n";
             set
             {
                 _useRegex = value;
+                OnPropertyChanged();
                 UpdateOutput();
             }
         }
@@ -210,8 +226,6 @@ $1\t$2\t$3\r\n";
                                     : UseRegex ?  Regex.Unescape(replacement) : replacement,
             }).Where(p => string.IsNullOrEmpty(p.RegexMatchPattern) == false);
 
-            
-
             try
             {
                 var regexOptions = GetRegexOptions();
@@ -222,7 +236,9 @@ $1\t$2\t$3\r\n";
                     {
                         if (UseRegex)
                         {
-                            input = Regex.Replace(input, rr.RegexMatchPattern, rr.RegexReplacePattern, regexOptions);
+                            var replacePattern = MagicMode ? (Regex.Unescape(Regex.Escape(RegexReplaceInputs).Replace(@"\$", "$"))) : rr.RegexReplacePattern;
+
+                            input = Regex.Replace(input, rr.RegexMatchPattern, replacePattern, regexOptions);
                         }
                         else
                         {

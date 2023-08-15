@@ -16,17 +16,19 @@
             <RowDefinition Height="410*"/>
         </Grid.RowDefinitions>
         <StackPanel Background="Beige">
-            <TextBlock TextWrapping="Wrap" Margin="5">(Top) Enter List of Regexes on the Left, and their corresponding replacements on the right (if no replacement value specified then will remove). (Bottom) Enter text on left, new text appears on right. </TextBlock>
+            <TextBlock TextWrapping="Wrap" Margin="5">(Top) Enter List of Regexes on the Left, and their corresponding replacements on the right. (Bottom) Enter text on left, output appears on right. Magic mode will escape all of the replace string, except for groups e.g. "$1" and then use that as a replacement.</TextBlock>
             <StackPanel Margin="5">
                 <StackPanel Orientation="Horizontal">
                     <CheckBox IsChecked="{Binding Path=IsCaseSensitive}">Match Case</CheckBox>
                     <CheckBox IsChecked="{Binding Path=EachLine}" Margin="20,0,0,0">Each Line</CheckBox>
+                    <CheckBox IsChecked="{Binding Path=MagicMode}" Margin="20,0,0,0">Magic Mode</CheckBox>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <CheckBox IsChecked="{Binding Path=UseRegex}">Use Regex</CheckBox>
                     <CheckBox IsChecked="{Binding Path=Multiline}" Margin="20,0,0,0">Match newline</CheckBox>
                 </StackPanel>
+
             </StackPanel>
         </StackPanel>
         <Grid Grid.Row="1" Background="Beige">
