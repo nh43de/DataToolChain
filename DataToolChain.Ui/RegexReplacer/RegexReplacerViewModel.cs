@@ -16,69 +16,17 @@ namespace DataToolChain.RegexMaker
 
         private string _stringInput = @"CREATE TABLE [dbo].[Generics](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
-	[Suffix] [nvarchar](255) NULL,
-	[Hierarchy 5] [nvarchar](255) NULL,
-	[Account] [nvarchar](255) NULL,
-	[Unique ID] [nvarchar](255) NULL,
+	[Suffix] [nvarchar](255) NULL
 	[Reinv Type] [nvarchar](255) NULL,
-	[Maturity] [float] NULL,
-	[Balloon] [float] NULL,
-	[Fixed/Adj] [nvarchar](255) NULL,
-	[Cpn (%)] [nvarchar](255) NULL,
-	[Price] [float] NULL,
-	[OAS (bps)] [float] NULL,
-	[Book Price] [float] NULL,
-	[BetaUp] [float] NULL,
-	[BetaDn] [float] NULL,
-	[Margin (%)] [float] NULL,
-	[TeaserSpread] [float] NULL,
-	[Index Mult] [float] NULL,
-	[Index] [nvarchar](255) NULL,
-	[Pay Freq] [nvarchar](255) NULL,
-	[Method] [nvarchar](255) NULL,
-	[RateResponseTable] [nvarchar](255) NULL,
-	[Day Count] [nvarchar](255) NULL,
-	[Lookback] [float] NULL,
-	[Rem IO] [float] NULL,
-	[Reset Freq] [nvarchar](255) NULL,
-	[First Reset] [float] NULL,
-	[Life Cap (%)] [nvarchar](255) NULL,
-	[Life Floor (%)] [nvarchar](255) NULL,
-	[Per Cap (%)] [nvarchar](255) NULL,
-	[Per Floor (%)] [nvarchar](255) NULL,
-	[Option Type] [nvarchar](255) NULL,
-	[Exercise Freq] [nvarchar](255) NULL,
-	[LockIn] [float] NULL,
-	[ExpireIn] [float] NULL,
-	[FundingSpd] [float] NULL,
-	[Prem/Disc Method] [nvarchar](255) NULL,
-	[PV Curve] [nvarchar](255) NULL,
-	[SolveFor] [nvarchar](255) NULL,
-	[SpreadRef] [nvarchar](255) NULL,
-	[Volatility (%)] [nvarchar](255) NULL,
-	[NonIntAdj] [float] NULL,
-	[PPConstant] [float] NULL,
-	[PPTableName] [nvarchar](255) NULL,
-	[PPTableMult] [float] NULL,
-	[PPModelName] [nvarchar](255) NULL,
-	[PPModelMult] [float] NULL,
-	[PPUnit] [nvarchar](255) NULL,
-	[YieldHaircut (%)] [float] NULL,
-	[IncomeTaxRate (%)] [float] NULL,
-	[CapGainTaxRate (%)] [float] NULL,
-	[TaxEquivAdj (%)] [float] NULL,
-	[Svc Spd (%)] [float] NULL,
-	[PPSpeedMin] [int] NULL,
-	[PrepayLevel] [nvarchar](255) NULL,
-	[PrincipalSwitch] [nvarchar](255) NULL
+	[Price] [float] NULL
 )";
 
-        private string _regexMatchInputs = @"[nvarchar]
+        private string _regexMatchInputs = @"nvarchar
 float
 NVARCHAR(255)
-[smallint]
-[datetime]
-[float]
+smallint
+datetime
+float
 (.*?)\t(.*?)\t(.*?)\r\n";
 
         private string _regexReplaceInputs = @"NVARCHAR
