@@ -422,6 +422,37 @@ namespace DataToolChain.DbStringer
                 }
             }),
 
+            
+            new RegexReplacement("CSV (tab) to C# Array", s =>
+            {
+                try
+                {
+                    var o = s.ReadCsvString('\t', true);
+
+                    var dd = o.ReadToCSharpArray();
+
+                    return dd;
+                }
+                catch (Exception)
+                {
+                    return "Error reading csv table";
+                }
+            }),
+            new RegexReplacement("CSV (comma) to C# Array", s =>
+            {
+                try
+                {
+                    var o = s.ReadCsvString(',', true);
+
+                    var dd = o.ReadToCSharpArray();
+
+                    return dd;
+                }
+                catch (Exception)
+                {
+                    return "Error reading csv table";
+                }
+            }),
 
             //sql inserts
             new RegexReplacement("CSV (tab) to SQL inserts", s =>
