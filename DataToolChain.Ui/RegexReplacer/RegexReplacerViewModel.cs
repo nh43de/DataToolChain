@@ -16,7 +16,7 @@ namespace DataToolChain.RegexMaker
 
         private string _stringInput = @"CREATE TABLE [dbo].[Generics](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
-	[Suffix] [nvarchar](255) NULL
+	[Suffix] nvarchar(255) NULL
 	[Reinv Type] [nvarchar](255) NULL,
 	[Price] [float] NULL
 )";
