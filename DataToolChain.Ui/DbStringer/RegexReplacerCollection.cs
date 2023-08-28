@@ -58,6 +58,7 @@ namespace DataToolChain.DbStringer
             new RegexReplacement("Tabbed list to comma-separated list", "\t", ","),
             new RegexReplacement("Tabbed list to rows", "\t", "\r\n"),
             new RegexReplacement("Vertical list to tabbed list", @"\r\n?", "\t", ","),
+            new RegexReplacement("Vertical list to sum", s => NewLineRegex().Split(s).JoinStr(" + ")),
             new RegexReplacement("Vertical list to SQL literal string", @"^(.*?)\r?$", "'$1' + CHAR(13) + CHAR(10)", " + CHAR(13) + CHAR(10)"),
             new RegexReplacement("Vertical list to SQL UNIONS", new[]
             {
