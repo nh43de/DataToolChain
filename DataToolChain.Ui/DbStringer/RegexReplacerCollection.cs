@@ -743,13 +743,17 @@ namespace DataToolChain.DbStringer
             })
         };
 
+        [GeneratedRegex("(?=[A-Z]+)")]
+        private static partial Regex CapitalRegex();
+
+
         private static string ToTitleCase(string s)
         {
             var properCase = new CultureInfo("en-US", false).TextInfo;
 
-            s = properCase.ToTitleCase(s.ToLower());
+            var sr = CapitalRegex().Split(s).Select(p => properCase.ToTitleCase(p)).JoinStr(" ");
 
-            return s;
+            return sr;
         }
 
         private static IRegexReplacementStep[] SanitizeColumnReplace { get; } = new IRegexReplacementStep[]
