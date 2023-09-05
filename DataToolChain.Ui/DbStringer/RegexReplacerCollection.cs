@@ -160,7 +160,7 @@ namespace DataToolChain.DbStringer
             }),
             new RegexReplacement("To Lower Case", s => s.ToLower()),
             new RegexReplacement("To Upper Case", s => s.ToUpper()),
-            new RegexReplacement("To Title Case", ToTitleCase),
+            new RegexReplacement("To Title Case", ToTitleCaseNoRegex),
             new RegexReplacement("Trim", s => s.Split('\r').Select(x => x.Trim()).JoinStr("\r\n")),
             new RegexReplacement("Trim and Remove Empty Lines", s => s.Split('\r').Select(x => x.Trim()).Where(p => string.IsNullOrEmpty(p) == false).JoinStr("\r\n")),
             new RegexReplacement("Remove Empty Lines", s => NewLineRegex().Split(s).Where(p => string.IsNullOrWhiteSpace(p) == false).JoinStr("\r\n")),
@@ -744,9 +744,16 @@ namespace DataToolChain.DbStringer
             })
         };
 
-        [GeneratedRegex("(?=[A-Z]+)")]
+        [GeneratedRegex("(?=[A-Z])")]
         private static partial Regex CapitalRegex();
 
+        private static string ToTitleCaseNoRegex(string s)
+        {
+            var properCase = new CultureInfo("en-US", false).TextInfo;
+            var sr = properCase.ToTitleCase(s.ToLower());
+
+            return sr;
+        }
 
         private static string ToTitleCase(string s)
         {
