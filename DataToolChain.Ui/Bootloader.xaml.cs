@@ -50,7 +50,7 @@ namespace DataToolChain
                     .OrderBy(a => a.DisplayText)
                     .ToList();
 
-            SelectedType = Windows[0].Value;
+            SelectedType = Windows[3].Value;
         }
 
         public void Launch()
