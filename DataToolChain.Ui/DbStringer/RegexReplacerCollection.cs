@@ -198,7 +198,8 @@ namespace DataToolChain.DbStringer
                     Replacement = "\""
                 }
             }),
-            new RegexReplacement("Params to Tabs", new[]
+            new RegexReplacement("Vertical URL list to HTML image tags", @"^(.*)$", "<img src='$1'/>", null, true),
+            new RegexReplacement("SQL Parameters to Tabbed List", new[]
             {
                 new RegexReplacementStep
                 {
@@ -216,7 +217,7 @@ namespace DataToolChain.DbStringer
                     Replacement = "\t"
                 }
             }),
-            new RegexReplacement("Tabs to params", new[]
+            new RegexReplacement("Tabbed list to SQL Parameters", new[]
             {
                 new RegexReplacementStep
                 {

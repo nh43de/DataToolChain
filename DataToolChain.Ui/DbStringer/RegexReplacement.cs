@@ -8,6 +8,7 @@ namespace DataToolChain.DbStringer
 {
     public class RegexReplacement
     {
+        private readonly bool _lineByLine;
         public string Name { get; private set; }
 
         private RegexReplacement(string name)
@@ -16,16 +17,18 @@ namespace DataToolChain.DbStringer
         }
         
         
-        public RegexReplacement(string name, string pattern, string replacement, string trimEndString = null) : this(name)
+        public RegexReplacement(string name, string pattern, string replacement, string trimEndString = null, bool lineByLine = false) : this(name)
         {
-            
+            _lineByLine = lineByLine;
+
             RegexReplacementSteps = new[]
             {
                 new RegexReplacementStep
                 {
                     TrimEndString = trimEndString,
                     Pattern = pattern,
-                    Replacement = replacement
+                    Replacement = replacement,
+                    LineByLine = lineByLine
                 }
             };
         }
@@ -94,13 +97,15 @@ namespace DataToolChain.DbStringer
             public string Replacement { get; set; }
 
             public string TrimEndString { get; set; }
+            public bool LineByLine { get; set; }
             public string DisplayText => $"[{Pattern}] -> [{Replacement}]";
 
-            public RegexReplacementStep(string pattern, string replacement, string trimEndString)
+            public RegexReplacementStep(string pattern, string replacement, string trimEndString, bool lineByLine = false)
             {
                 Pattern = pattern;
                 Replacement = replacement;
                 TrimEndString = trimEndString;
+                LineByLine = lineByLine;
             }
 
             public RegexReplacementStep()
@@ -182,16 +187,34 @@ namespace DataToolChain.DbStringer
 
         public static string RegexReplace(RegexReplacementStep r, string text)
         {
-            if (string.IsNullOrEmpty(text))
-                return string.Empty;
+            var regex = new Regex(r.Pattern, RegexOptions.Multiline);
 
-            var rtn = new Regex(r.Pattern, RegexOptions.Multiline).Replace(text, Regex.Unescape(r.Replacement));
-            if (!string.IsNullOrWhiteSpace(r.TrimEndString) && rtn.EndsWith(r.TrimEndString))
+            string Process(RegexReplacementStep r, string text)
             {
-                return rtn.Substring(0, rtn.Length - r.TrimEndString.Length);
+                if (string.IsNullOrEmpty(text))
+                    return string.Empty;
+
+                var rtn = regex.Replace(text, Regex.Unescape(r.Replacement));
+                if (!string.IsNullOrWhiteSpace(r.TrimEndString) && rtn.EndsWith(r.TrimEndString))
+                {
+                    return rtn.Substring(0, rtn.Length - r.TrimEndString.Length);
+                }
+
+                return rtn;
             }
 
-            return rtn;
+            if (r.LineByLine)
+            {
+                var lines = Regex.Split(text, "\r\n?");
+
+                var outputString = lines.Select(l => Process(r, l)).JoinStr("\r\n");
+
+                return outputString;
+            }
+            else
+            {
+                return Process(r, text);
+            }
         }
 
         public static string RegexReplace(IRegexReplacementStep[] r, string text)
@@ -206,8 +229,6 @@ namespace DataToolChain.DbStringer
 
             return text;
         }
-
-
 
         public string DisplayText => Name + ": " + RegexReplacementSteps?.Select((r, i) => r.DisplayText).JoinStr("\r\n");
     }
