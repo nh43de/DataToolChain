@@ -177,6 +177,18 @@ namespace DataToolChain.DbStringer
                 .OrderByDescending(p => p.Count)
                 .Select(p => p.Key + '\t' + p.Count)
                 .JoinStr("\r\n")),
+            new RegexReplacement("Duplicated Values", s => Regex.Split(s, "\r\n?")
+                .Select(p => p.Trim())
+                .GroupBy(p => p)
+                .Select(p => new
+                {
+                    Count = p.Count(),
+                    p.Key
+                })
+                .Where(p => p.Count > 1)
+                .OrderByDescending(p => p.Count)
+                .Select(p => p.Key)
+                .JoinStr("\r\n")),
             new RegexReplacement("Sort Alphabetically", s => Regex.Split(s, "\r\n?").OrderBy(x => x).JoinStr("\r\n")),
             new RegexReplacement("Sort Alphabetically Desc", s => Regex.Split(s, "\r\n?").OrderByDescending(x => x).JoinStr("\r\n")),
             new RegexReplacement("Sort by Length", s => Regex.Split(s, "\r\n?").OrderBy(x => x.Length).ThenBy(x => x).JoinStr("\r\n")),
