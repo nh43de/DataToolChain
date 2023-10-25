@@ -177,7 +177,7 @@ namespace DataToolChain.DbStringer
                 .OrderByDescending(p => p.Count)
                 .Select(p => p.Key + '\t' + p.Count)
                 .JoinStr("\r\n")),
-            new RegexReplacement("Duplicated Values", s => Regex.Split(s, "\r\n?")
+            new RegexReplacement("List Duplicated Values", s => Regex.Split(s, "\r\n?")
                 .Select(p => p.Trim())
                 .GroupBy(p => p)
                 .Select(p => new
