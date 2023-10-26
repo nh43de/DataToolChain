@@ -503,7 +503,7 @@ namespace DataToolChain.DbStringer
 
             
             //sql selects
-            new RegexReplacement("CSV (tab) to SQL selects", s =>
+            new RegexReplacement("CSV (tab) to SQL UNION selects", s =>
             {
                 try
                 {
@@ -518,7 +518,7 @@ namespace DataToolChain.DbStringer
                     return "Error reading csv table";
                 }
             }),
-            new RegexReplacement("CSV (comma) to SQL selects", s =>
+            new RegexReplacement("CSV (comma) to SQL UNION selects", s =>
             {
                 try
                 {
