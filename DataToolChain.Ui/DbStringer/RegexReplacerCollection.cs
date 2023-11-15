@@ -11,6 +11,7 @@ using DataPowerTools.FileSystem;
 using DataPowerTools.PowerTools;
 using DataToolChain.Ui.DbStringer;
 using DataToolChain.Ui.Extensions;
+using MoreLinq.Extensions;
 using static DataToolChain.DbStringer.RegexReplacement;
 
 namespace DataToolChain.DbStringer
@@ -164,6 +165,7 @@ namespace DataToolChain.DbStringer
             new RegexReplacement("Trim", s => s.Split('\r').Select(x => x.Trim()).JoinStr("\r\n")),
             new RegexReplacement("Trim and Remove Empty Lines", s => s.Split('\r').Select(x => x.Trim()).Where(p => string.IsNullOrEmpty(p) == false).JoinStr("\r\n")),
             new RegexReplacement("Remove Empty Lines", s => NewLineRegex().Split(s).Where(p => string.IsNullOrWhiteSpace(p) == false).JoinStr("\r\n")),
+            new RegexReplacement("Shuffle Lines", s => NewLineRegex().Split(s).Shuffle().JoinStr("\r\n")),
             //new RegexReplacement("Distinct", s => Regex.Split(s, "\r\n?").Select(x => x.Trim()).Distinct().JoinStr("\r\n")),
             new RegexReplacement("Distinct", s => s.Split('\r').Select(x => x.Trim()).Distinct().OrderBy(x => x).JoinStr("\r\n")),
             new RegexReplacement("Group and Count", s => Regex.Split(s, "\r\n?")
