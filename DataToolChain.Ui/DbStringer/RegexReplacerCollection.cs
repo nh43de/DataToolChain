@@ -169,6 +169,10 @@ namespace DataToolChain.DbStringer
             new RegexReplacement("Shuffle Lines", s => NewLineRegex().Split(s).Shuffle().JoinStr("\r\n")),
             //new RegexReplacement("Distinct", s => Regex.Split(s, "\r\n?").Select(x => x.Trim()).Distinct().JoinStr("\r\n")),
             new RegexReplacement("Distinct", s => s.Split('\r').Select(x => x.Trim()).Distinct().OrderBy(x => x).JoinStr("\r\n")),
+            new RegexReplacement("Count Lines", s => NewLineRegex().Split(s).Count().ToString()),
+            new RegexReplacement("Count Non-Empty Lines", s => NewLineRegex().Split(s).Count(p => string.IsNullOrWhiteSpace(p) == false).ToString()),
+            new RegexReplacement("Count Distinct Lines", s => NewLineRegex().Split(s).Distinct().Count().ToString()),
+            new RegexReplacement("Count Distinct Non-Empty Lines", s => NewLineRegex().Split(s).Where(p => string.IsNullOrWhiteSpace(p) == false).Select(p => p.Trim()).Distinct().Count().ToString()),
             new RegexReplacement("Group and Count", s => Regex.Split(s, "\r\n?")
                 .Select(p => p.Trim())
                 .GroupBy(p => p)
