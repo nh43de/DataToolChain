@@ -16,6 +16,7 @@ using static DataToolChain.DbStringer.RegexReplacement;
 
 namespace DataToolChain.DbStringer
 {
+
     public class SelectableRegexReplacement
     {
         public bool IsChecked { get; set; } = false;
@@ -761,7 +762,14 @@ namespace DataToolChain.DbStringer
                 {
                     return "Error: " + ex.Message;
                 }
-            })
+            }),
+
+            new RegexReplacement("GZip Compress Text", s => GZipHelper.CompressString(s)),
+            new RegexReplacement("DEFLATE Compress Text", s => DeflateHelper.CompressString(s)),
+            new RegexReplacement("GZip Decompress Text", s => GZipHelper.DecompressString(s)),
+            new RegexReplacement("DEFLATE Decompress Text", s => DeflateHelper.DecompressString(s)),
+
+
         };
 
         [GeneratedRegex("(?=[A-Z])")]
