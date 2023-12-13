@@ -92,6 +92,7 @@ namespace DataToolChain.DbStringer
                 }
             }),
             new RegexReplacement("List to C# auto-properties", s => NewLineRegex().Split(s).Where(p => string.IsNullOrWhiteSpace(p) == false).Select(p => $"public cs_type {SanitizeColumn(p)} {{ get; set; }}").JoinStr("\r\n")),
+            new RegexReplacement("Vertical list to pipe or (|)", s => NewLineRegex().Split(s).JoinStr(" | ")),
             new RegexReplacement("Vertical list to Regex alternative match expression", new IRegexReplacementStep[]
             {
                 new RegexReplacementStepFunc(Regex.Escape, "regex escape"),
