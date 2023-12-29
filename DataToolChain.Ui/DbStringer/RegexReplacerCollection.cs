@@ -576,6 +576,20 @@ namespace DataToolChain.DbStringer
                 }
             }),
 
+            new RegexReplacement("JSON array to CSharp Object Initializer", s =>
+            {
+                try
+                {
+                    var dd = s.FromJsonToCsharpObjectInit();
+
+                    return dd;
+                }
+                catch (Exception)
+                {
+                    return "Error parsing json";
+                }
+            }),
+
             new RegexReplacement("JSON array to SQL inserts", s =>
             {
                 try
