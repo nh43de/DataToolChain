@@ -93,6 +93,19 @@ namespace DataToolChain.DbStringer
             }),
             new RegexReplacement("List to C# auto-properties", s => NewLineRegex().Split(s).Where(p => string.IsNullOrWhiteSpace(p) == false).Select(p => $"public cs_type {SanitizeColumn(p)} {{ get; set; }}").JoinStr("\r\n")),
             new RegexReplacement("Vertical list to pipe or (|)", s => NewLineRegex().Split(s).JoinStr(" | ")),
+           
+            new RegexReplacement("Vertical list (or table) to switch arms", s => s.ReadCsvString('\t', false)
+                .SelectRows(dr =>
+                {
+                    if (dr.FieldCount > 1 && string.IsNullOrWhiteSpace(dr[1]?.ToString()) == false)
+                    {
+                        return $"{dr[0]} => {dr[1]},";
+                    }
+
+                    return $"{dr[0]} => ,";
+                })
+                .JoinStr("\r\n")),
+           
             new RegexReplacement("Vertical list to Regex alternative match expression", new IRegexReplacementStep[]
             {
                 new RegexReplacementStepFunc(Regex.Escape, "regex escape"),
@@ -575,7 +588,7 @@ namespace DataToolChain.DbStringer
                     return "Error reading csv table";
                 }
             }),
-
+            
             new RegexReplacement("JSON array to CSharp Object Initializer", s =>
             {
                 try
