@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DataPowerTools.DataConnectivity.Sql;
@@ -19,23 +20,15 @@ namespace DataToolChain
         {
             var readers = new List<IDataReader>();
 
-            var readerFacs = new List<Func<DataReaderInfo>>();
-            foreach (var filePath in filePaths)
-            {
-                var readerFac = new Func<DataReaderInfo>(() =>
+            var readerFacs = filePaths.Select(filePath => new Func<DataReaderInfo>(() =>
                 {
-                    var r = new DataReaderInfo
-                    {
-                        DataReader = DataReaderFactories.Default(filePath, true, csvDelimiter),
-                        FilePath = filePath
-                    };
+                    var r = new DataReaderInfo { DataReader = DataReaderFactories.Default(filePath, true, csvDelimiter), FilePath = filePath };
 
                     readers.Add(r.DataReader);
 
                     return r;
-                });
-                readerFacs.Add(readerFac);
-            }
+                }))
+                .ToList();
 
             var rr =  CreateTableSql.FromDataReader_Smart(tableName, readerFacs);
 

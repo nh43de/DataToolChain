@@ -185,6 +185,49 @@ namespace DataToolChain.DbStringer
             new RegexReplacement("Shuffle Lines", s => NewLineRegex().Split(s).Shuffle().JoinStr("\r\n")),
             //new RegexReplacement("Distinct", s => Regex.Split(s, "\r\n?").Select(x => x.Trim()).Distinct().JoinStr("\r\n")),
             new RegexReplacement("Distinct", s => s.Split('\r').Select(x => x.Trim()).Distinct().OrderBy(x => x).JoinStr("\r\n")),
+            new RegexReplacement("Except", s =>
+            {
+                try
+                {
+                    var lines = NewLineRegex().Split(s);
+
+                    var i = lines.IndexOfFirstEmptyLine();
+
+                    if (i >= lines.Length)
+                        return string.Empty;
+
+                    var firstPart = lines[0..(i)];
+                    var secondPart = lines[(i + 1)..];
+
+                    return firstPart.Except(secondPart).JoinStr("\r\n");
+                }
+                catch
+                {
+                    return string.Empty;
+                }
+            }),
+            new RegexReplacement("Intersect", s =>
+            {
+                try
+                {
+                    var lines = NewLineRegex().Split(s);
+
+                    var i = lines.IndexOfFirstEmptyLine();
+
+                    if (i >= lines.Length)
+                        return string.Empty;
+
+                    var firstPart = lines[0..(i)];
+                    var secondPart = lines[(i + 1)..];
+
+                    return firstPart.Intersect(secondPart).JoinStr("\r\n");
+                }
+                catch
+                {
+                    return string.Empty;
+                }
+            }),
+
             new RegexReplacement("Count Lines", s => NewLineRegex().Split(s).Count().ToString()),
             new RegexReplacement("Count Non-Empty Lines", s => NewLineRegex().Split(s).Count(p => string.IsNullOrWhiteSpace(p) == false).ToString()),
             new RegexReplacement("Count Distinct Lines", s => NewLineRegex().Split(s).Distinct().Count().ToString()),
@@ -858,9 +901,9 @@ namespace DataToolChain.DbStringer
 
             return r;
         }
-
+        
         [GeneratedRegex("\r\n?")]
-        private static partial Regex NewLineRegex();
+        public static partial Regex NewLineRegex();
     }
 }
 
