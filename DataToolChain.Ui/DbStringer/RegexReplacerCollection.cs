@@ -441,6 +441,68 @@ namespace DataToolChain.DbStringer
                 }
             }),
 
+            new RegexReplacement("UnPivot2 CSV table (tab)", s =>
+            {
+                try
+                {
+                    var o = s.ReadCsvString('\t', true);
+
+                    var dd = o.UnPivot(2);
+
+                    return dd.AsCsv(true, true);
+                }
+                catch (Exception)
+                {
+                    return "Error reading csv table";
+                }
+            }),
+            new RegexReplacement("UnPivot2 CSV table (comma)", s =>
+            {
+                try
+                {
+                    var o = s.ReadCsvString(',', true);
+
+                    var dd = o.UnPivot(2);
+
+                    return dd.AsCsv(true, false);
+                }
+                catch (Exception)
+                {
+                    return "Error reading csv table";
+                }
+            }),
+            
+            new RegexReplacement("UnPivot3 CSV table (tab)", s =>
+            {
+                try
+                {
+                    var o = s.ReadCsvString('\t', true);
+
+                    var dd = o.UnPivot(3);
+
+                    return dd.AsCsv(true, true);
+                }
+                catch (Exception)
+                {
+                    return "Error reading csv table";
+                }
+            }),
+            new RegexReplacement("UnPivot3 CSV table (comma)", s =>
+            {
+                try
+                {
+                    var o = s.ReadCsvString(',', true);
+
+                    var dd = o.UnPivot(3);
+
+                    return dd.AsCsv(true, false);
+                }
+                catch (Exception)
+                {
+                    return "Error reading csv table";
+                }
+            }),
+
             new RegexReplacement("CSV (tab) to Create Table SQL", s =>
             {
                 try
