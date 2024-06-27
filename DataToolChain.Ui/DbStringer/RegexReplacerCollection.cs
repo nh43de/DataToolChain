@@ -581,6 +581,21 @@ namespace DataToolChain.DbStringer
                     return "Error reading csv table";
                 }
             }),
+            new RegexReplacement("CSV (tab) to C# Array (anonymous type)", s =>
+            {
+                try
+                {
+                    var o = s.ReadCsvString('\t', true);
+
+                    var dd = o.ReadToCSharpArray(true);
+
+                    return dd;
+                }
+                catch (Exception)
+                {
+                    return "Error reading csv table";
+                }
+            }),
             new RegexReplacement("CSV (comma) to C# Array", s =>
             {
                 try
