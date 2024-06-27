@@ -12,21 +12,30 @@
             <ColumnDefinition Width="13*"/>
             <ColumnDefinition Width="134*"/>
         </Grid.ColumnDefinitions>
-        <TextBox Margin="11,208,10,50" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" AcceptsReturn="True" MaxLines="214000000" Text="{Binding Path=Sql, UpdateSourceTrigger=PropertyChanged}" AcceptsTab="True" Grid.ColumnSpan="2" />
-        <Label FontWeight="Bold" Content="Query" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,177,0,0" Grid.ColumnSpan="2"/>
-        <Button Content="Save" Click="ButtonBase_OnClick" Margin="0,0,10,26" Height="19" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Grid.Column="1"/>
-        <Label FontWeight="Bold" Content="Server" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,36,0,0" Grid.ColumnSpan="2"/>
-        <Label FontWeight="Bold" Content="Database" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,72,0,0" Grid.ColumnSpan="2"/>
-        <TextBox Height="23" Margin="43,39,11,0" Text="{Binding Path=ServerName, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Grid.Column="1"/>
-        <TextBox Height="23" Margin="43,72,11,0" Text="{Binding Path=Database, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Grid.Column="1"/>
-        <Label FontWeight="Bold" Content="Username" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,100,0,0" Grid.ColumnSpan="2"/>
-        <TextBox Height="23" Margin="43,100,10,0" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Grid.Column="1"/>
-        <Label FontWeight="Bold" Content="Password" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,128,0,0" Grid.ColumnSpan="2"/>
-        <PasswordBox Height="23" Margin="43,128,10,0" VerticalAlignment="Top" x:Name="PasswordBox" Grid.Column="1"></PasswordBox>
+        
         <Label FontWeight="Bold" Content="File Path" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,7,0,0" Grid.ColumnSpan="2"/>
         <TextBox Height="23" Margin="44,10,38,0" Text="{Binding FilePath, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Grid.Column="1"/>
         <Button Margin="0,10,11,0" Content="..." VerticalAlignment="Top" Click="ButtonBrowse_OnClick"  Height="23" HorizontalAlignment="Right" Width="25" Grid.Column="1"/>
 
+
+
+
+        <Label FontWeight="Bold" Content="Server" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,36,0,0" Grid.ColumnSpan="2"/>
+        <TextBox Height="23" Margin="43,39,11,0" Text="{Binding Path=ServerName, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Grid.Column="1"/>
+
+        <Label FontWeight="Bold" Content="Database" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,72,0,0" Grid.ColumnSpan="2"/>
+        <TextBox Height="23" Margin="43,72,11,0" Text="{Binding Path=Database, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Grid.Column="1"/>
+        
+        <Label FontWeight="Bold" Content="Username" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,100,0,0" Grid.ColumnSpan="2"/>
+        <TextBox Height="23" Margin="43,100,10,0" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Grid.Column="1"/>
+        
+        <Label FontWeight="Bold" Content="Password" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,128,0,0" Grid.ColumnSpan="2"/>
+        <PasswordBox Height="23" Margin="43,128,10,0" VerticalAlignment="Top" x:Name="PasswordBox" Grid.Column="1"></PasswordBox>
+
+        <Label FontWeight="Bold" Content="Query" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,177,0,0" Grid.ColumnSpan="2"/>
+        <TextBox Margin="11,208,10,50" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" AcceptsReturn="True" MaxLines="214000000" Text="{Binding Path=Sql, UpdateSourceTrigger=PropertyChanged}" AcceptsTab="True" Grid.ColumnSpan="2" />
+        
+        <Button Content="Save" Click="ButtonBase_OnClick" Margin="0,0,10,26" Height="19" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Grid.Column="1"/>
 
         <StatusBar Grid.ColumnSpan="2" Height="21" VerticalAlignment="Bottom">
             <StatusBarItem>
