@@ -93,7 +93,38 @@ namespace DataToolChain.DbStringer
             }),
             new RegexReplacement("List to C# auto-properties", s => NewLineRegex().Split(s).Where(p => string.IsNullOrWhiteSpace(p) == false).Select(p => $"public cs_type {SanitizeColumn(p)} {{ get; set; }}").JoinStr("\r\n")),
             new RegexReplacement("Vertical list to pipe or (|)", s => NewLineRegex().Split(s).JoinStr(" | ")),
-           
+
+
+            new RegexReplacement("Column List to SQL CASE WHEN", new IRegexReplacementStep[]
+            {
+                new RegexReplacementStep
+                {
+                    Pattern = @"^(\w+)(?:\s+(\w+))?$",
+                    Replacement = "WHEN $1 THEN $2,",
+                    LineByLine = true
+                }
+            }),
+
+            new RegexReplacement("Column List to SQL CASE WHEN (with quotes)", new IRegexReplacementStep[]
+            {
+                new RegexReplacementStep
+                {
+                    Pattern = @"^(\w+)(?:\s+(\w+))?$",
+                    Replacement = "WHEN '$1' THEN '$2',",
+                    LineByLine = true
+                }
+            }),
+
+            new RegexReplacement("Column List to C# Switch Arms", new IRegexReplacementStep[]
+            {
+                new RegexReplacementStep
+                {
+                    Pattern = @"^(\w+)(?:\s+(\w+))?$",
+                    Replacement = "$1 => $2,",
+                    LineByLine = true
+                }
+            }),
+
             new RegexReplacement("Vertical list (or table) to switch arms", s => s.ReadCsvString('\t', false)
                 .SelectRows(dr =>
                 {
