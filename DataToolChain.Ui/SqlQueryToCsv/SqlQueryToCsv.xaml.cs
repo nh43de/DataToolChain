@@ -1,26 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Data.Common;
-using System.Data.SqlClient;
-using System.DirectoryServices.ActiveDirectory;
-using System.Linq;
+using System.Globalization;
+using System.IO;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using DataPowerTools.DataConnectivity.Sql;
-using DataPowerTools.DataReaderExtensibility.TransformingReaders;
 using DataPowerTools.Extensions;
-using DataToolChain.Ui.Extensions;
 using Microsoft.Data.SqlClient;
 using Microsoft.Win32;
 
@@ -68,6 +54,30 @@ namespace DataToolChain
                 _viewModel.FilePath = d.FileName;
             }
         }
+
+    }
+
+    public class NullableIntConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value?.ToString();
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (string.IsNullOrWhiteSpace(value?.ToString()))
+            {
+                return null;
+            }
+
+            if (int.TryParse(value.ToString(), out int result))
+            {
+                return result;
+            }
+
+            return null;
+        }
     }
 
     public class SqlQueryToCsvViewModel : INotifyPropertyChanged
@@ -88,6 +98,21 @@ namespace DataToolChain
             {
                 _filePath = value;
                 OnPropertyChanged();
+            }
+        }
+
+        private int? _rowsPerBatch;
+
+        public int? RowsPerBatch
+        {
+            get => _rowsPerBatch;
+            set
+            {
+                if (_rowsPerBatch != value)
+                {
+                    _rowsPerBatch = value;
+                    OnPropertyChanged(nameof(RowsPerBatch));
+                }
             }
         }
 
@@ -134,13 +159,39 @@ namespace DataToolChain
 
                 var rows = 0;
 
-                var rc = r.NotifyOn(new Progress<int>(i =>
-                {
-                    StatusMessage = $"{i} rows output.";
-                    rows = i;
-                }));
 
-                rc.WriteCsv(FilePath);
+                if (RowsPerBatch.HasValue)
+                {
+                    var rr = r.Batch(RowsPerBatch.Value);
+
+                    var fileNum = 0;
+
+                    foreach (var dataReader in rr)
+                    {
+                        fileNum++;
+
+                        var rc = dataReader.NotifyOn(new Progress<int>(i =>
+                        {
+                            StatusMessage = $"File {fileNum} - {i} rows output.";
+                            rows = i;
+                        }));
+
+                        var filePath = $"{Path.GetDirectoryName(FilePath)}{Path.DirectorySeparatorChar}{Path.GetFileNameWithoutExtension(FilePath)}_{fileNum}{Path.GetExtension(FilePath)}";
+                        
+                        rc.WriteCsv(filePath);
+                    }
+                }
+                else
+                {
+                    var rc = r.NotifyOn(new Progress<int>(i =>
+                    {
+                        StatusMessage = $"{i} rows output.";
+                        rows = i;
+                    }));
+
+                    rc.WriteCsv(FilePath);
+                }
+
 
                 StatusMessage = $"Finished: {rows} rows output.";
             }
@@ -149,7 +200,6 @@ namespace DataToolChain
                 StatusMessage = e.ConcatenateInners();
             }
         }
-
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

@@ -11,8 +11,8 @@
 
   <ItemGroup>
     <PackageReference Include="JUST.net" Version="4.3.0" />
-    <PackageReference Include="DataPowerTools" Version="2.5.2-alpha.0.2" />
-    <PackageReference Include="DataPowerTools.Connectivity" Version="2.5.2-alpha.0.2" />
+    <PackageReference Include="DataPowerTools" Version="2.5.2-alpha.0.4" />
+    <PackageReference Include="DataPowerTools.Connectivity" Version="2.5.2-alpha.0.4" />
     <PackageReference Include="EPPlus" Version="6.2.3" />
     <PackageReference Include="morelinq" Version="3.4.2" />
     <PackageReference Include="ExcelDataReader" Version="3.7.0" />
