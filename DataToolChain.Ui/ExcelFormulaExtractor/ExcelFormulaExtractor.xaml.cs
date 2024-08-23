@@ -76,7 +76,7 @@ namespace DataToolChain.Ui.ExcelFormulaExtractor
 
                     for (var col = 0; col < cols; col++)
                     {
-                        var f = reader.GetFormula(col);
+                        var f = string.Empty; //reader.GetFormula(col); //TODO: not sure why this doesn't work anymore
 
                         if (string.IsNullOrWhiteSpace(f) == false)
                             yield return $"{fileName}\t{sheetNumber}\t{col+1}\t{row}\t{f}";
