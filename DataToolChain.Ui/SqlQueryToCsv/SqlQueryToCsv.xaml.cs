@@ -40,9 +40,15 @@ namespace DataToolChain
             
             Task.Run(async () =>
             {
+                try
+                {
                 await _viewModel.Go();
                 _viewModel.Password = "";
+                }
+                finally
+                {
                 isRunning = false;
+                }
             });
         }
 
