@@ -10,6 +10,7 @@ using System.Windows.Data;
 using DataPowerTools.Extensions;
 using Microsoft.Data.SqlClient;
 using Microsoft.Win32;
+using OfficeOpenXml.Export.ToDataTable;
 
 namespace DataToolChain
 {
@@ -166,6 +167,7 @@ namespace DataToolChain
                 using var r = sqlConn.ExecuteReader(Sql);
 
                 var rows = 0;
+
                 StatusMessage = "Starting copy ...";
 
                 if (RowsPerBatch.HasValue)
@@ -178,17 +180,21 @@ namespace DataToolChain
 
                     foreach (var dataReader in rr)
                     {
+                        var thisRows = 0;
+
                         fileNum++;
 
                         var rc = dataReader.NotifyOn(new Progress<int>(i =>
                         {
-                            StatusMessage = $"File {fileNum} - {i} rows output.";
-                            rows = i;
-                        }));
+                            thisRows = i;
+                            StatusMessage = $"File {fileNum} - {thisRows} rows output.";
+                        }), 100);
 
                         var filePath = $"{Path.GetDirectoryName(selectedFilePath)}{Path.DirectorySeparatorChar}{Path.GetFileNameWithoutExtension(selectedFilePath)}_{fileNum}{Path.GetExtension(selectedFilePath)}";
                         
                         rc.WriteCsv(filePath);
+
+                        rows += thisRows;
                     }
                 }
                 else
