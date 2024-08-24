@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
@@ -154,11 +155,12 @@ namespace DataToolChain
                 using var sqlConn = sqlcstr.ConnectionString.CreateSqlConnection();
 
                 //sqlConn.Open();
-
+                StatusMessage = $"Executing reader ...";
+                
                 using var r = sqlConn.ExecuteReader(Sql);
 
                 var rows = 0;
-
+                StatusMessage = "Starting copy ...";
 
                 if (RowsPerBatch.HasValue)
                 {

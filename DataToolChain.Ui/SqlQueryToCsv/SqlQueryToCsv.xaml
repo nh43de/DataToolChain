@@ -10,7 +10,7 @@
     <Window.Resources>
         <local:NullableIntConverter x:Key="NullableIntConverter" />
     </Window.Resources>
-    <Grid Margin="0,0,0,-16">
+    <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="13*"/>
             <ColumnDefinition Width="134*"/>
