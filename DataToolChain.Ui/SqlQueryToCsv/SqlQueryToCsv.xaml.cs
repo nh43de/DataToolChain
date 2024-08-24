@@ -42,12 +42,12 @@ namespace DataToolChain
             {
                 try
                 {
-                await _viewModel.Go();
-                _viewModel.Password = "";
+                    await _viewModel.Go();
+                    _viewModel.Password = "";
                 }
                 finally
                 {
-                isRunning = false;
+                    isRunning = false;
                 }
             });
         }
@@ -170,6 +170,8 @@ namespace DataToolChain
 
                 if (RowsPerBatch.HasValue)
                 {
+                    var selectedFilePath = new FileInfo(FilePath).FullName;
+
                     var rr = r.Batch(RowsPerBatch.Value);
 
                     var fileNum = 0;
@@ -184,7 +186,7 @@ namespace DataToolChain
                             rows = i;
                         }));
 
-                        var filePath = $"{Path.GetDirectoryName(FilePath)}{Path.DirectorySeparatorChar}{Path.GetFileNameWithoutExtension(FilePath)}_{fileNum}{Path.GetExtension(FilePath)}";
+                        var filePath = $"{Path.GetDirectoryName(selectedFilePath)}{Path.DirectorySeparatorChar}{Path.GetFileNameWithoutExtension(selectedFilePath)}_{fileNum}{Path.GetExtension(selectedFilePath)}";
                         
                         rc.WriteCsv(filePath);
                     }
