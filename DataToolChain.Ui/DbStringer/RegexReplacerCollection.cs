@@ -176,6 +176,7 @@ namespace DataToolChain.DbStringer
                     Replacement = "'\r\n"
                 }
             }),
+            new RegexReplacement("Spaces to Tabs", @" +", "\t"),
             new RegexReplacement("", @"\r", "SELECT '$1' \r\nUNION ALL", "\r\nUNION ALL"),
             new RegexReplacement("Sql Input Params Into Declarations", @"^.*?(@\w+.*?)(,|$).*?(--|/\*)?.*", "DECLARE $1"),
             new RegexReplacement("Escape SQL String", "'", "''"),
