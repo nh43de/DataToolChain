@@ -16,7 +16,6 @@ using static DataToolChain.DbStringer.RegexReplacement;
 
 namespace DataToolChain.DbStringer
 {
-
     public class SelectableRegexReplacement
     {
         public bool IsChecked { get; set; } = false;
@@ -426,6 +425,7 @@ namespace DataToolChain.DbStringer
                     Replacement = @".+"
                 }
             }),
+            new RegexReplacement("Chunkify", s => ChunkifyExtensions.ChunkifyString(s).JoinStr("\r\n")),
             new RegexReplacement("Parse Hours", ParseHours.Parse),
             new RegexReplacement("Format Json", s =>
             {
