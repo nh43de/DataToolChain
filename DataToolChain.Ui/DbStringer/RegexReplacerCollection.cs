@@ -286,10 +286,10 @@ namespace DataToolChain.DbStringer
                 .OrderByDescending(p => p.Count)
                 .Select(p => p.Key)
                 .JoinStr("\r\n")),
-            new RegexReplacement("Sort Alphabetically", s => Regex.Split(s, "\r\n?").OrderBy(x => x).JoinStr("\r\n")),
-            new RegexReplacement("Sort Alphabetically Desc", s => Regex.Split(s, "\r\n?").OrderByDescending(x => x).JoinStr("\r\n")),
-            new RegexReplacement("Sort by Length", s => Regex.Split(s, "\r\n?").OrderBy(x => x.Length).ThenBy(x => x).JoinStr("\r\n")),
-            new RegexReplacement("Sort by Length Desc", s => Regex.Split(s, "\r\n?").OrderByDescending(x => x.Length).ThenBy(x => x).JoinStr("\r\n")),
+            new RegexReplacement("Sort Alphabetically", s => Regex.Split(s, @"\r\n|\r|\n").OrderBy(x => x).JoinStr("\r\n")),
+            new RegexReplacement("Sort Alphabetically Desc", s => Regex.Split(s, @"\r\n|\r|\n").OrderByDescending(x => x).JoinStr("\r\n")),
+            new RegexReplacement("Sort by Length", s => Regex.Split(s, @"\r\n|\r|\n").OrderBy(x => x.Length).ThenBy(x => x).JoinStr("\r\n")),
+            new RegexReplacement("Sort by Length Desc", s => Regex.Split(s, @"\r\n|\r|\n").OrderByDescending(x => x.Length).ThenBy(x => x).JoinStr("\r\n")),
             new RegexReplacement("Condense Whitespace", new[]
             {
                 new RegexReplacementStep
@@ -303,7 +303,7 @@ namespace DataToolChain.DbStringer
             {
                 new RegexReplacementStep
                 {
-                    Pattern = @"['‘’“”]",
+                    Pattern = @"['â€˜â€™â€œâ€]",
                     Replacement = "\""
                 }
             }),
