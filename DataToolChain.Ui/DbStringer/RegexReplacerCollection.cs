@@ -950,6 +950,113 @@ namespace DataToolChain.DbStringer
             new RegexReplacement("GZip Decompress Text", s => GZipHelper.DecompressString(s)),
             new RegexReplacement("DEFLATE Decompress Text", s => DeflateHelper.DecompressString(s)),
 
+            new RegexReplacement("Transpose CSV table (tab)", s =>
+            {
+                try
+                {
+                    var data = s.ReadCsvString('\t', true);
+                    
+                    var rows = new List<List<string>>();
+                    
+                    // Read all data including headers
+                    var headers = new List<string>();
+                    for (int i = 0; i < data.FieldCount; i++)
+                    {
+                        headers.Add(data.GetName(i));
+                    }
+                    rows.Add(headers);
+                    
+                    // Read all data rows
+                    while (data.Read())
+                    {
+                        var rowData = new List<string>();
+                        for (int i = 0; i < data.FieldCount; i++)
+                        {
+                            rowData.Add(data[i]?.ToString() ?? "");
+                        }
+                        rows.Add(rowData);
+                    }
+                    
+                    // Transpose
+                    if (rows.Count == 0)
+                        return "";
+                        
+                    var colCount = rows.Max(r => r.Count);
+                    var transposed = new List<List<string>>();
+                    
+                    for (int col = 0; col < colCount; col++)
+                    {
+                        var newRow = new List<string>();
+                        for (int row = 0; row < rows.Count; row++)
+                        {
+                            newRow.Add(col < rows[row].Count ? rows[row][col] : "");
+                        }
+                        transposed.Add(newRow);
+                    }
+                    
+                    // Output as tab-delimited
+                    return transposed.Select(row => row.JoinStr("\t")).JoinStr("\r\n");
+                }
+                catch (Exception ex)
+                {
+                    return "Error transposing table: " + ex.Message;
+                }
+            }),
+
+            new RegexReplacement("Transpose CSV table (comma)", s =>
+            {
+                try
+                {
+                    var data = s.ReadCsvString(',', true);
+                    
+                    var rows = new List<List<string>>();
+                    
+                    // Read all data including headers
+                    var headers = new List<string>();
+                    for (int i = 0; i < data.FieldCount; i++)
+                    {
+                        headers.Add(data.GetName(i));
+                    }
+                    rows.Add(headers);
+                    
+                    // Read all data rows
+                    while (data.Read())
+                    {
+                        var rowData = new List<string>();
+                        for (int i = 0; i < data.FieldCount; i++)
+                        {
+                            rowData.Add(data[i]?.ToString() ?? "");
+                        }
+                        rows.Add(rowData);
+                    }
+                    
+                    // Transpose
+                    if (rows.Count == 0)
+                        return "";
+                        
+                    var colCount = rows.Max(r => r.Count);
+                    var transposed = new List<List<string>>();
+                    
+                    for (int col = 0; col < colCount; col++)
+                    {
+                        var newRow = new List<string>();
+                        for (int row = 0; row < rows.Count; row++)
+                        {
+                            newRow.Add(col < rows[row].Count ? rows[row][col] : "");
+                        }
+                        transposed.Add(newRow);
+                    }
+                    
+                    // Output as comma-delimited (with proper CSV escaping if needed)
+                    return transposed.Select(row => row.JoinStr(",")).JoinStr("\r\n");
+                }
+                catch (Exception ex)
+                {
+                    return "Error transposing table: " + ex.Message;
+                }
+            }),
+
+            new RegexReplacement("Tabs to rows", "\t", "\r\n"),
 
         };
 
