@@ -14,7 +14,7 @@ namespace DataToolChain.Ui.DbStringer
         
         public static string Parse(string timeStrings)
         {
-            var tStr = timeStrings.Split("\r\n");
+            var tStr = Regex.Split(timeStrings, @"\r\n|\n|\r");
 
             var tStr2 = tStr.Select(p =>
             {
